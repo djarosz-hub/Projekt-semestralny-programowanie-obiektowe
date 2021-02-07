@@ -103,6 +103,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OSHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Orders.cs">
@@ -110,6 +114,9 @@
     </Compile>
     <Compile Include="Ord_Prod.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OSHome.xaml.cs">
+      <DependentUpon>OSHome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Producers.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
@@ -151,7 +158,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bgphoto.jpg" />
     <Content Include="DbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DbModel.edmx</DependentUpon>
@@ -162,6 +168,8 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
       <LastGenOutput>DbModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="freeStockPhoto2.jpg" />
+    <Resource Include="freeStockPhoto.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

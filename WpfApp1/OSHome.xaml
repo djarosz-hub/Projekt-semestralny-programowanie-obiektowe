@@ -1,0 +1,43 @@
+﻿<Page x:Class="WpfApp1.OSHome"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="900"
+      Title="OrderSupporterV1 Main">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Order Supporter V1</Label>
+        <StackPanel Style="{StaticResource stackPanelOptionsStyle}" Grid.Row="1" Width="250">
+            <Label Style="{StaticResource labelStyle}" Margin="5,0,0,0">Available actions:</Label>
+            <Label Style="{StaticResource labelStyle}">Adding</Label>
+            <Label Style="{StaticResource labelStyle}">Reading</Label>
+            <Label Style="{StaticResource labelStyle}">Updating</Label>
+            <Label Style="{StaticResource labelStyle}">Removing</Label>
+        </StackPanel>
+        <Label Style="{StaticResource supportingLabel}" Grid.Row="2">Choose category:</Label>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <Button Style="{StaticResource buttonStyle}" >Order</Button>
+            <Button Style="{StaticResource buttonStyle}" >Categories</Button>
+            <Button Style="{StaticResource buttonStyle}" >Producers</Button>
+            <Button Style="{StaticResource buttonStyle}" >Products</Button>
+            <Button Style="{StaticResource buttonStyle}" >Employees</Button>
+            <Button Style="{StaticResource buttonStyle}" >Clients</Button>
+        </StackPanel>
+        
+    </Grid>
+</Page>

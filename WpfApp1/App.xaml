@@ -4,6 +4,49 @@
              xmlns:local="clr-namespace:WpfApp1"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="headerTextStyle">
+            <Setter Property="Label.VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="Label.HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Label.FontFamily" Value="Trebuchet MS"></Setter>
+            <Setter Property="Label.FontWeight" Value="Bold"></Setter>
+            <Setter Property="Label.FontSize" Value="50"></Setter>
+            <Setter Property="Label.Foreground" Value="White"/>
+            <!--<Setter Property="Label.Margin" Value="0,25,0,0"/>-->
+        </Style>
+        <Style x:Key="labelStyle" TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontFamily" Value="Trebuchet MS"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="Auto"/>
+            <!--<Setter Property="Width" Value="Auto"/>-->
+        </Style>
+        <Style x:Key="supportingLabel" TargetType="{x:Type Label}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontFamily" Value="Trebuchet MS"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="130"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="FontFamily" Value="Trebuchet MS"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+        <Style x:Key="stackPanelOptionsStyle" TargetType="{x:Type StackPanel}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Orientation" Value="Vertical"/>
+        </Style>
     </Application.Resources>
 </Application>
