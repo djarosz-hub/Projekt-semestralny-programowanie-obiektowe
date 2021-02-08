@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="OrderSupporterV1 Main">
+      Title="OrderSupportV1 Main">
 
     <Grid>
         <Grid.Background>
@@ -21,22 +21,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Order Supporter V1</Label>
+        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0">Order Supporter V1</Label>
         <StackPanel Style="{StaticResource stackPanelOptionsStyle}" Grid.Row="1" Width="250">
             <Label Style="{StaticResource labelStyle}" Margin="5,0,0,0">Available actions:</Label>
-            <Label Style="{StaticResource labelStyle}">Adding</Label>
+            <Label Style="{StaticResource labelStyle}">Creating</Label>
             <Label Style="{StaticResource labelStyle}">Reading</Label>
             <Label Style="{StaticResource labelStyle}">Updating</Label>
-            <Label Style="{StaticResource labelStyle}">Removing</Label>
+            <Label Style="{StaticResource labelStyle}">Deleting</Label>
         </StackPanel>
         <Label Style="{StaticResource supportingLabel}" Grid.Row="2">Choose category:</Label>
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
-            <Button Style="{StaticResource buttonStyle}" >Order</Button>
-            <Button Style="{StaticResource buttonStyle}" >Categories</Button>
-            <Button Style="{StaticResource buttonStyle}" >Producers</Button>
-            <Button Style="{StaticResource buttonStyle}" >Products</Button>
-            <Button Style="{StaticResource buttonStyle}" >Employees</Button>
-            <Button Style="{StaticResource buttonStyle}" >Clients</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="OrderButton_Click" >Order</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="CategoriesButton_Click" >Categories</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="ProducersButton_Click" >Producers</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="ProductsButton_Click" >Products</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="EmployeesButton_Click" >Employees</Button>
+            <Button Style="{StaticResource buttonStyle}" Click="ClientsButton_Click" >Clients</Button>
         </StackPanel>
         
     </Grid>
