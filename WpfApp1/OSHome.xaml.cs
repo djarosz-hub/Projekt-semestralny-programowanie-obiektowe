@@ -20,23 +20,47 @@ namespace WpfApp1
     /// </summary>
     public partial class OSHome : Page
     {
+        public enum DbSources { Orders, Categories, Producers, Products, Employees, Clients };
         OrdersPage ordersPage;
         CategoriesPage categoriesPage;
         ProducersPage producersPage;
         ProductsPage productsPage;
         EmployeesPage employeesPage;
         ClientsPage clientsPage;
-        internal MydbEntities DBCON;
+        internal MydbEntities db;
         public OSHome()
         {
             InitializeComponent();
-            DBCON = new MydbEntities();
-            ordersPage = new OrdersPage(DBCON);
-            categoriesPage = new CategoriesPage(DBCON);
-            producersPage = new ProducersPage(DBCON);
-            productsPage = new ProductsPage(DBCON);
-            employeesPage = new EmployeesPage(DBCON);
-            clientsPage = new ClientsPage(DBCON);
+            db = new MydbEntities();
+            ordersPage = new OrdersPage(db);
+            categoriesPage = new CategoriesPage(db);
+            producersPage = new ProducersPage(db, this);
+            productsPage = new ProductsPage(db);
+            employeesPage = new EmployeesPage(db);
+            clientsPage = new ClientsPage(db);
+        }
+        internal bool IsInputInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
+        internal bool IsAssignedToEntity(DbSources sourceCat, int index)
+        {
+            switch (sourceCat)
+            {
+                case DbSources.Producers:
+                    {
+                        foreach(var p in db.Products)
+                        {
+                            if (p.category == index)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Products:
+                    break;
+                case DbSources.Employees:
+                    break;
+                case DbSources.Clients:
+                    break;
+            }
+            return false;
         }
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {

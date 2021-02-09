@@ -23,10 +23,12 @@ namespace WpfApp1
     {
         MydbEntities db;
         CollectionViewSource producersViewSource;
-        public ProducersPage(MydbEntities db)
+        OSHome commander;
+        public ProducersPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
+            this.commander = commander;
             producersViewSource = ((CollectionViewSource)(FindResource("producersViewSource")));
             DataContext = this;
         }
@@ -49,7 +51,7 @@ namespace WpfApp1
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             string value = AddNameTB.Text.Trim();
-            if (IsInputInvalid(value, "Producer name"))
+            if (commander.IsInputInvalid(value, "Producer name"))
             {
                 MessageBox.Show($"Can't add empty or default value to database.");
                 return;
@@ -69,7 +71,7 @@ namespace WpfApp1
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
             string value = RemoveNameTB.Text.Trim();
-            if (IsInputInvalid(value, "Producer name or ID"))
+            if (commander.IsInputInvalid(value, "Producer name or ID"))
             {
                 MessageBox.Show($"Input value is default or empty, type correct value.");
                 return;
@@ -93,18 +95,18 @@ namespace WpfApp1
             if (parsedIntValue == 0)
             {
                 int producerId = db.Producers.Single(x => x.producer_name == value).producer_id;
-                if (IsProducerAssignedToAnyProduct(producerId))
+                if(commander.IsAssignedToEntity(OSHome.DbSources.Producers, producerId))
                 {
-                    MessageBox.Show($"Product is already assigned to product, can't remove.");
+                    MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
                 RemoveFromDb(producerId);
             }
             else
             {
-                if (IsProducerAssignedToAnyProduct(parsedIntValue))
+                if (commander.IsAssignedToEntity(OSHome.DbSources.Producers, parsedIntValue))
                 {
-                    MessageBox.Show($"Product is already assigned to product, can't remove.");
+                    MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
                 RemoveFromDb(parsedIntValue);
@@ -117,7 +119,7 @@ namespace WpfApp1
         {
             string newName = UpdateNewNameTB.Text.Trim();
             string oldName = UpdateOldNameTB.Text.Trim();
-            if(IsInputInvalid(newName, "New name") || IsInputInvalid(oldName, "Old name"))
+            if(commander.IsInputInvalid(newName, "New name") || commander.IsInputInvalid(oldName, "Old name"))
             {
                 MessageBox.Show("Empty or default value is invalid for updating.");
                 return;
@@ -144,7 +146,7 @@ namespace WpfApp1
         private void Find_Click(object sender, RoutedEventArgs e)
         {
             string value = FindTB.Text.Trim();
-            if (IsInputInvalid(value, "Producer name"))
+            if (commander.IsInputInvalid(value, "Producer name"))
             {
                 MessageBox.Show($"Invalid value");
                 return;
@@ -164,16 +166,16 @@ namespace WpfApp1
             db.Producers.Remove(producerToRemove);
             db.SaveChanges();
         }
-        private bool IsProducerAssignedToAnyProduct(int index)
-        {
-            foreach (var p in db.Products)
-            {
-                if (p.category == index)
-                    return true;
-            }
-            return false;
-        }
-        private bool IsInputInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
+        //private bool IsProducerAssignedToAnyProduct(int index)
+        //{
+        //    foreach (var p in db.Products)
+        //    {
+        //        if (p.category == index)
+        //            return true;
+        //    }
+        //    return false;
+        //}
+        //private bool IsInplutInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
         private bool ExistsInDatabaseByNameCaseInsensitive(string input, out string found)
         {
             var exisitingProducers = db.Producers;

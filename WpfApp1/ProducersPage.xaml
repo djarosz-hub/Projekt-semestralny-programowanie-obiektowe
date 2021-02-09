@@ -35,20 +35,20 @@
         </DataGrid>
         
         <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="1" Margin="0">Add producer:</Label>
-        <Button Style="{StaticResource producerButton}" Content="Add" Grid.Column="1" Grid.Row="1" Click="Add_Click"/>
-        <TextBox x:Name="AddNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="1" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Add" Grid.Column="1" Grid.Row="1" Click="Add_Click"/>
+        <TextBox x:Name="AddNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="1" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
 
         <Label Style="{StaticResource labelStyle}" Grid.Row="2" Grid.Column="1" Margin="0">Remove producer:</Label>
-        <TextBox x:Name="RemoveNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="2" Grid.Column="1" Text="Producer name or ID" GotFocus="RemovePlaceHolder" MaxLength="25"/>
-        <Button Style="{StaticResource producerButton}" Content="Remove" Grid.Column="1" Grid.Row="2" Click="Remove_Click"/>
+        <TextBox x:Name="RemoveNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="2" Grid.Column="1" Text="Producer name or ID" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Remove" Grid.Column="1" Grid.Row="2" Click="Remove_Click"/>
 
         <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" Margin="0">Update producer name:</Label>
-        <TextBox x:Name="UpdateOldNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Old name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
-        <TextBox x:Name="UpdateNewNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="-30,0,0,0" Text="New name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
-        <Button Style="{StaticResource producerButton}" Content="Update" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Margin="-100,0,0,8" Click="Update_Click"/>
+        <TextBox x:Name="UpdateOldNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Old name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <TextBox x:Name="UpdateNewNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="-30,0,0,0" Text="New name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Update" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Margin="-100,0,0,8" Click="Update_Click"/>
 
         <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" Margin="0">Find producer by name:</Label>
-        <TextBox x:Name="FindTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="4" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
-        <Button Style="{StaticResource producerButton}" Content="Find" Grid.Column="1" Grid.Row="4" Click="Find_Click"/>
+        <TextBox x:Name="FindTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="4" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Find" Grid.Column="1" Grid.Row="4" Click="Find_Click"/>
     </Grid>
 </Page>
