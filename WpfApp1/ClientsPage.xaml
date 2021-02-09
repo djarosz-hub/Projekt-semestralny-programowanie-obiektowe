@@ -6,18 +6,61 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="ClientsPage">
+      Title="ClientsPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="clientsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Clients}, CreateList=True}"/>
+        <CollectionViewSource x:Key="clientsOrdersViewSource" Source="{Binding Orders, Source={StaticResource clientsViewSource}}"/>
+        <CollectionViewSource x:Key="clientsOrdersOrd_ProdViewSource" Source="{Binding Ord_Prod, Source={StaticResource clientsOrdersViewSource}}"/>
+    </Page.Resources>
 
-    <Grid>
+    <Grid DataContext="{StaticResource clientsViewSource}">
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0">Clients</Label>
+        <DataGrid Style="{StaticResource dataGridStyle}" x:Name="clientsDataGrid" Grid.Column="0" Grid.Row="1" Grid.RowSpan="7" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="client_idColumn" Binding="{Binding client_id}" Header="client id" Width="Auto"/>
+                <DataGridTextColumn x:Name="client_first_nameColumn" Binding="{Binding client_first_name}" Header="client first name" Width="Auto"/>
+                <DataGridTextColumn x:Name="client_nameColumn" Binding="{Binding client_name}" Header="client name" Width="Auto"/>
+                <DataGridTextColumn x:Name="firm_evidence_numberColumn" Binding="{Binding firm_evidence_number}" Header="firm evidence number" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Style="{StaticResource dataGridStyle}" x:Name="ordersDataGrid" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="client_idColumn1" Binding="{Binding client_id}" Header="client id" Width="SizeToHeader"/>
+                <DataGridTemplateColumn x:Name="order_dateColumn" Header="order date" Width="SizeToHeader">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding order_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="order_employeeColumn" Binding="{Binding order_employee}" Header="order employee" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Style="{StaticResource supportingLabel}" Grid.Row="0" Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left">Client orders:</Label>
+        <DataGrid x:Name="ord_ProdDataGrid" AutoGenerateColumns="False" Grid.Column="1" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersOrd_ProdViewSource}}" Margin="54.291,29.873,45.782,4.891" Grid.Row="4" Grid.RowSpan="3" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="order_idColumn1" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="quantityColumn" Binding="{Binding quantity}" Header="quantity" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

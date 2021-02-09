@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,23 @@ namespace WpfApp1
     public partial class ClientsPage : Page
     {
         MydbEntities db;
-        public ClientsPage(MydbEntities db)
+        OSHome commander;
+        CollectionViewSource clientsOrderViewSource;
+        CollectionViewSource clientsViewSource;
+        public ClientsPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
+            this.commander = commander;
+            clientsOrderViewSource = ((CollectionViewSource)(FindResource("clientsOrdersViewSource")));
+            clientsViewSource = ((CollectionViewSource)(FindResource("clientsViewSource")));
+            DataContext = this;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            db.Clients.Load();
+            clientsViewSource.Source = db.Clients.Local;
         }
     }
 }

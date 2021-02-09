@@ -37,7 +37,7 @@ namespace WpfApp1
             producersPage = new ProducersPage(db, this);
             productsPage = new ProductsPage(db);
             employeesPage = new EmployeesPage(db);
-            clientsPage = new ClientsPage(db);
+            clientsPage = new ClientsPage(db,this);
         }
         internal bool IsInputInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
         internal bool IsAssignedToEntity(DbSources sourceCat, int index)
