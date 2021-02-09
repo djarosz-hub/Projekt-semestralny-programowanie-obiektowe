@@ -33,7 +33,7 @@ namespace WpfApp1
             InitializeComponent();
             db = new MydbEntities();
             ordersPage = new OrdersPage(db);
-            categoriesPage = new CategoriesPage(db);
+            categoriesPage = new CategoriesPage(db, this);
             producersPage = new ProducersPage(db, this);
             productsPage = new ProductsPage(db);
             employeesPage = new EmployeesPage(db);
@@ -48,7 +48,16 @@ namespace WpfApp1
                     {
                         foreach(var p in db.Products)
                         {
-                            if (p.category == index)
+                            if (p.producer == index)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Categories:
+                    {
+                        foreach(var c in db.Products)
+                        {
+                            if (c.category == index)
                                 return true;
                         }
                         break;
@@ -61,6 +70,132 @@ namespace WpfApp1
                     break;
             }
             return false;
+        }
+        internal bool ExistsInDatabaseByID(DbSources sourceCat, int index)
+        {
+            switch (sourceCat)
+            {
+                case DbSources.Producers:
+                    {
+                        foreach(var p in db.Producers)
+                        {
+                            if (p.producer_id == index)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Categories:
+                    {
+                        foreach(var c in db.Categories)
+                        {
+                            if (c.category_id == index)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Products:
+                    break;
+                case DbSources.Employees:
+                    break;
+                case DbSources.Clients:
+                    break;
+            }
+            return false;
+        }
+        internal bool ExistsInDatabaseByNameCaseInsensitive(DbSources sourceCat, string input, out string found)
+        {
+            switch (sourceCat)
+            {
+                case DbSources.Producers:
+                    {
+                        foreach(var p in db.Producers)
+                        {
+                            if(p.producer_name.ToLower() == input.ToLower())
+                            {
+                                found = p.producer_name;
+                                return true;
+                            }
+                        }
+                        break;
+                    }
+                case DbSources.Categories:
+                    {
+                        foreach(var c in db.Categories)
+                        {
+                            if(c.category_name.ToLower() == input.ToLower())
+                            {
+                                found = c.category_name;
+                                return true;
+                            }
+                        }
+                        break;
+                    }
+                case DbSources.Products:
+                    break;
+                case DbSources.Employees:
+                    break;
+                case DbSources.Clients:
+                    break;
+            }
+            found = "";
+            return false;
+        }
+        internal bool ExistsInDatabaseByNameCaseSensitive(DbSources sourceCat, string input)
+        {
+            switch (sourceCat)
+            {
+                case DbSources.Producers:
+                    {
+                        foreach(var p in db.Producers)
+                        {
+                            if (p.producer_name == input)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Categories:
+                    {
+                        foreach(var c in db.Categories)
+                        {
+                            if (c.category_name == input)
+                                return true;
+                        }
+                        break;
+                    }
+                case DbSources.Products:
+                    break;
+                case DbSources.Employees:
+                    break;
+                case DbSources.Clients:
+                    break;
+            }
+            return false;
+        }
+        internal void RemoveFromDb(DbSources sourceCat, int index)
+        {
+            switch (sourceCat)
+            {
+                case DbSources.Producers:
+                    {
+                        Producers producerToRemove = db.Producers.Single(x => x.producer_id == index);
+                        db.Producers.Remove(producerToRemove);
+                        db.SaveChanges();
+                        break;
+                    }
+                case DbSources.Categories:
+                    {
+                        Categories categoryToRemove = db.Categories.Single(x => x.category_id == index);
+                        db.Categories.Remove(categoryToRemove);
+                        db.SaveChanges();
+                        break;
+                    }
+                case DbSources.Products:
+                    break;
+                case DbSources.Employees:
+                    break;
+                case DbSources.Clients:
+                    break;
+            }
         }
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {

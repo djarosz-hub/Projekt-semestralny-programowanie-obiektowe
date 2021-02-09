@@ -32,7 +32,6 @@ namespace WpfApp1
             producersViewSource = ((CollectionViewSource)(FindResource("producersViewSource")));
             DataContext = this;
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             db.Producers.Load();
@@ -47,7 +46,6 @@ namespace WpfApp1
                 tb.Text = "";
             }
         }
-
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             string value = AddNameTB.Text.Trim();
@@ -56,7 +54,7 @@ namespace WpfApp1
                 MessageBox.Show($"Can't add empty or default value to database.");
                 return;
             }
-            if (ExistsInDatabaseByNameCaseInsensitive(value, out string found))
+            if (commander.ExistsInDatabaseByNameCaseInsensitive(OSHome.DbSources.Producers, value, out string found))
             {
                 MessageBox.Show($"Producer with name {found} already exists in database.");
                 return;
@@ -78,7 +76,7 @@ namespace WpfApp1
             }
             if (int.TryParse(value, out int parsedIntValue))
             {
-                if (!ExistsInDatabaseByID(parsedIntValue))
+                if (!commander.ExistsInDatabaseByID(OSHome.DbSources.Producers, parsedIntValue))
                 {
                     MessageBox.Show($"Producer with ID: {parsedIntValue} doesn't exists in database.");
                     return;
@@ -86,7 +84,7 @@ namespace WpfApp1
             }
             else
             {
-                if (!ExistsInDatabaseByNameCaseSensitive(value))
+                if (!commander.ExistsInDatabaseByNameCaseSensitive(OSHome.DbSources.Producers, value))
                 {
                     MessageBox.Show($"Producer with name: {value} doesn't exists in database.");
                     return;
@@ -95,12 +93,12 @@ namespace WpfApp1
             if (parsedIntValue == 0)
             {
                 int producerId = db.Producers.Single(x => x.producer_name == value).producer_id;
-                if(commander.IsAssignedToEntity(OSHome.DbSources.Producers, producerId))
+                if (commander.IsAssignedToEntity(OSHome.DbSources.Producers, producerId))
                 {
                     MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
-                RemoveFromDb(producerId);
+                commander.RemoveFromDb(OSHome.DbSources.Producers, producerId);
             }
             else
             {
@@ -109,7 +107,7 @@ namespace WpfApp1
                     MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
-                RemoveFromDb(parsedIntValue);
+                commander.RemoveFromDb(OSHome.DbSources.Producers, parsedIntValue);
             }
             MessageBox.Show("Producer successfully removed from database.");
             RemoveNameTB.Text = "Producer name or ID";
@@ -119,21 +117,22 @@ namespace WpfApp1
         {
             string newName = UpdateNewNameTB.Text.Trim();
             string oldName = UpdateOldNameTB.Text.Trim();
-            if(commander.IsInputInvalid(newName, "New name") || commander.IsInputInvalid(oldName, "Old name"))
+            if (commander.IsInputInvalid(newName, "New name") || commander.IsInputInvalid(oldName, "Old name"))
             {
                 MessageBox.Show("Empty or default value is invalid for updating.");
                 return;
             }
-            if(ExistsInDatabaseByNameCaseInsensitive(newName, out string found))
+            if (commander.ExistsInDatabaseByNameCaseInsensitive(OSHome.DbSources.Producers, newName, out string found))
             {
                 MessageBox.Show($"Producer named {newName} already exists in database.");
                 return;
             }
-            if (!ExistsInDatabaseByNameCaseSensitive(oldName))
+            if (!commander.ExistsInDatabaseByNameCaseSensitive(OSHome.DbSources.Producers, oldName))
             {
                 MessageBox.Show($"Producer named {oldName} doesn't exists in database.");
                 return;
             }
+
             Producers producerToUpdate = new Producers();
             producerToUpdate = db.Producers.Single(x => x.producer_name == oldName);
             producerToUpdate.producer_name = newName;
@@ -151,7 +150,7 @@ namespace WpfApp1
                 MessageBox.Show($"Invalid value");
                 return;
             }
-            if(ExistsInDatabaseByNameCaseInsensitive(value, out string found))
+            if (commander.ExistsInDatabaseByNameCaseInsensitive(OSHome.DbSources.Producers, value, out string found))
             {
                 int producerId = db.Producers.Single(x => x.producer_name == found).producer_id;
                 MessageBox.Show($"Found:\nID: {producerId}\nName: {found}");
@@ -160,50 +159,5 @@ namespace WpfApp1
             MessageBox.Show("Not found.");
             FindTB.Text = "Producer name";
         }
-        private void RemoveFromDb(int index)
-        {
-            Producers producerToRemove = db.Producers.Single(x => x.producer_id == index);
-            db.Producers.Remove(producerToRemove);
-            db.SaveChanges();
-        }
-        //private bool IsProducerAssignedToAnyProduct(int index)
-        //{
-        //    foreach (var p in db.Products)
-        //    {
-        //        if (p.category == index)
-        //            return true;
-        //    }
-        //    return false;
-        //}
-        //private bool IsInplutInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
-        private bool ExistsInDatabaseByNameCaseInsensitive(string input, out string found)
-        {
-            var exisitingProducers = db.Producers;
-            foreach (var p in exisitingProducers)
-                if (p.producer_name.ToLower() == input.ToLower())
-                {
-                    found = p.producer_name;
-                    return true;
-                }
-            found = "";
-            return false;
-        }
-        private bool ExistsInDatabaseByNameCaseSensitive(string input)
-        {
-            var exisitingProducers = db.Producers;
-            foreach (var p in exisitingProducers)
-                if (p.producer_name == input)
-                    return true;
-            return false;
-        }
-        private bool ExistsInDatabaseByID(int input)
-        {
-            var exisitingProducers = db.Producers;
-            foreach (var p in exisitingProducers)
-                if (p.producer_id == input)
-                    return true;
-            return false;
-        }
-
     }
 }
