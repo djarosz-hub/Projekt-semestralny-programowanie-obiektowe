@@ -6,18 +6,49 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="ProducersPage">
+      Title="ProducersPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="producersViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Producers}, CreateList=True}"/>
+    </Page.Resources>
 
-    <Grid>
+    <Grid DataContext="{StaticResource producersViewSource}">
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0">Producers</Label>
+        <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0" Grid.Column="0">Producers</Label>
+        <DataGrid x:Name="producersDataGrid" Style="{StaticResource dataGridStyle}" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="4" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="producer_idColumn" Binding="{Binding producer_id}" Header="producer id" Width="Auto"/>
+                <DataGridTextColumn x:Name="producer_nameColumn" Binding="{Binding producer_name}" Header="producer name" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="1" Margin="0">Add producer:</Label>
+        <Button Style="{StaticResource producerButton}" Content="Add" Grid.Column="1" Grid.Row="1" Click="Add_Click"/>
+        <TextBox x:Name="AddNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="1" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="2" Grid.Column="1" Margin="0">Remove producer:</Label>
+        <TextBox x:Name="RemoveNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="2" Grid.Column="1" Text="Producer name or ID" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource producerButton}" Content="Remove" Grid.Column="1" Grid.Row="2" Click="Remove_Click"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" Margin="0">Update producer name:</Label>
+        <TextBox x:Name="UpdateOldNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Old name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <TextBox x:Name="UpdateNewNameTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" Margin="-30,0,0,0" Text="New name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource producerButton}" Content="Update" Grid.Column="1" Grid.Row="3" VerticalAlignment="Bottom" Margin="-100,0,0,8" Click="Update_Click"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" Margin="0">Find producer by name:</Label>
+        <TextBox x:Name="FindTB" Style="{StaticResource producerOptionTextBox}" Grid.Row="4" Grid.Column="1" Text="Producer name" GotFocus="RemovePlaceHolder" MaxLength="25"/>
+        <Button Style="{StaticResource producerButton}" Content="Find" Grid.Column="1" Grid.Row="4" Click="Find_Click"/>
     </Grid>
 </Page>

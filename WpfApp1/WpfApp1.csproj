@@ -191,6 +191,23 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\App.datasource" />
+    <None Include="Properties\DataSources\Categories.datasource" />
+    <None Include="Properties\DataSources\CategoriesPage.datasource" />
+    <None Include="Properties\DataSources\Clients.datasource" />
+    <None Include="Properties\DataSources\ClientsPage.datasource" />
+    <None Include="Properties\DataSources\Employees.datasource" />
+    <None Include="Properties\DataSources\EmployeesPage.datasource" />
+    <None Include="Properties\DataSources\MainWindow.datasource" />
+    <None Include="Properties\DataSources\MydbEntities.datasource" />
+    <None Include="Properties\DataSources\Orders.datasource" />
+    <None Include="Properties\DataSources\OrdersPage.datasource" />
+    <None Include="Properties\DataSources\Ord_Prod.datasource" />
+    <None Include="Properties\DataSources\OSHome.datasource" />
+    <None Include="Properties\DataSources\Producers.datasource" />
+    <None Include="Properties\DataSources\ProducersPage.datasource" />
+    <None Include="Properties\DataSources\Products.datasource" />
+    <None Include="Properties\DataSources\ProductsPage.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

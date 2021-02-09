@@ -4,14 +4,19 @@
              xmlns:local="clr-namespace:WpfApp1"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style x:Key="headerTextStyle">
-            <Setter Property="Label.VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="Label.HorizontalAlignment" Value="Center"></Setter>
-            <Setter Property="Label.FontFamily" Value="Trebuchet MS"></Setter>
-            <Setter Property="Label.FontWeight" Value="Bold"></Setter>
-            <Setter Property="Label.FontSize" Value="50"></Setter>
-            <Setter Property="Label.Foreground" Value="White"/>
+        <Style x:Key="headerTextStyle" TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="FontFamily" Value="Trebuchet MS"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="50"></Setter>
+            <Setter Property="Foreground" Value="White"/>
             <!--<Setter Property="Label.Margin" Value="0,25,0,0"/>-->
+        </Style>
+        <Style x:Key="subHeaderTextStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource headerTextStyle}">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="15,15,0,0"/>
         </Style>
         <Style x:Key="labelStyle" TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="20,0,0,0"/>
@@ -47,6 +52,30 @@
         <Style x:Key="stackPanelOptionsStyle" TargetType="{x:Type StackPanel}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="Orientation" Value="Vertical"/>
+        </Style>
+        <Style x:Key="dataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="AlternatingRowBackground" Value ="LightBlue"/>
+            <Setter Property="RowBackground" Value="AliceBlue"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="3"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="CanUserSortColumns" Value="False"/>
+            <Setter Property="Margin" Value="15"/>
+        </Style>
+        <Style x:Key="producerOptionTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Margin" Value="50,0,0,0"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="producerButton" TargetType="{x:Type Button}" BasedOn="{StaticResource buttonStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="-100,0,0,0"/>
         </Style>
     </Application.Resources>
 </Application>

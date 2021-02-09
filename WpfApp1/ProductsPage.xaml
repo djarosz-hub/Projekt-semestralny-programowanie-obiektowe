@@ -6,9 +6,12 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="ProductsPage">
+      Title="ProductsPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="productsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Products}, CreateList=True}"/>
+    </Page.Resources>
 
-    <Grid>
+    <Grid DataContext="{StaticResource productsViewSource}">
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
@@ -18,6 +21,15 @@
         <Grid.RowDefinitions>
 
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0">Products</Label>
+        <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0">Products</Label>
+        <DataGrid x:Name="productsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="15,139,544.782,39.436" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="product_nameColumn" Binding="{Binding product_name}" Header="product name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="categoryColumn" Binding="{Binding category}" Header="category" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="producerColumn" Binding="{Binding producer}" Header="producer" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding price}" Header="price" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

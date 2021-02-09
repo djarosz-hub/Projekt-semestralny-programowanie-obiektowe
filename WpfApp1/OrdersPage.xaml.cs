@@ -20,9 +20,26 @@ namespace WpfApp1
     /// </summary>
     public partial class OrdersPage : Page
     {
-        public OrdersPage()
+        MydbEntities db;
+        public OrdersPage(MydbEntities db)
         {
             InitializeComponent();
+            this.db = db;
+            FillOrders();
+        }
+        void FillOrders()
+        {
+            var dbOrders = db.Orders;
+            foreach(var order in dbOrders)
+            {
+                string output = $"date: {order.order_date}, client id:{order.client_id}, employee: {order.order_employee}\n";
+                testbox.Text += output;
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FillOrders();
         }
     }
 }

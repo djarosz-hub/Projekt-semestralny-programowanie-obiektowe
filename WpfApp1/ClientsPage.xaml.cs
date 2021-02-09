@@ -20,9 +20,11 @@ namespace WpfApp1
     /// </summary>
     public partial class ClientsPage : Page
     {
-        public ClientsPage()
+        MydbEntities db;
+        public ClientsPage(MydbEntities db)
         {
             InitializeComponent();
+            this.db = db;
         }
     }
 }

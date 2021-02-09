@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace WpfApp1
 {
@@ -20,9 +21,20 @@ namespace WpfApp1
     /// </summary>
     public partial class ProductsPage : Page
     {
-        public ProductsPage()
+        MydbEntities db;
+        CollectionViewSource productViewSource;
+        public ProductsPage(MydbEntities db)
         {
             InitializeComponent();
+            this.db = db;
+            productViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
+            DataContext = this;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            db.Products.Load();
+            productViewSource.Source = db.Products.Local;
         }
     }
 }
