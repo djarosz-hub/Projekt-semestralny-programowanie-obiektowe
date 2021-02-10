@@ -38,7 +38,6 @@ namespace WpfApp1
             db.Categories.Load();
             categoriesViewSource.Source = db.Categories.Local;
         }
-
         private void Find_Click(object sender, RoutedEventArgs e)
         {
             string value = FindTB.Text.Trim();
@@ -56,7 +55,6 @@ namespace WpfApp1
             MessageBox.Show("Not Found");
             FindTB.Text = "Category name";
         }
-
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             string newName = UpdateNewNameTB.Text.Trim();
@@ -114,24 +112,23 @@ namespace WpfApp1
             if(parsedIntValue == 0)
             {
                 int categoryId = db.Categories.Single(x => x.category_name == value).category_id;
-                if(commander.IsAssignedToEntity(OSHome.DbSources.Categories, categoryId))
-                {
-                    MessageBox.Show($"Category is already assigned to product, can't remove.");
-                    return;
-                }
-                commander.RemoveFromDb(OSHome.DbSources.Categories, categoryId);
+                RemoveCat(categoryId);
             }
             else
             {
-                if(commander.IsAssignedToEntity(OSHome.DbSources.Categories, parsedIntValue))
-                {
-                    MessageBox.Show($"Category is already assigned to product, can't remove.");
-                    return;
-                }
-                commander.RemoveFromDb(OSHome.DbSources.Categories, parsedIntValue);
+                RemoveCat(parsedIntValue);
             }
             MessageBox.Show("Category successfully removed from database.");
             RemoveNameTB.Text = "Category name or ID";
+        }
+        private void RemoveCat(int index)
+        {
+            if(commander.IsAssignedToEntity(OSHome.DbSources.Categories, index))
+            {
+                MessageBox.Show($"Category is already assigned to product, can't remove.");
+                return;
+            }
+            commander.RemoveFromDb(OSHome.DbSources.Categories, index);
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {

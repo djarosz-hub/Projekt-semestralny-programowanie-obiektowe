@@ -6,18 +6,76 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="EmployeesPage">
+      Title="EmployeesPage" Loaded="Page_Loaded">
+    <Page.Resources>
+        <CollectionViewSource x:Key="employeesViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Employees}, CreateList=True}"/>
+        <CollectionViewSource x:Key="employeesOrdersViewSource" Source="{Binding Orders, Source={StaticResource employeesViewSource}}"/>
+        <CollectionViewSource x:Key="employeesOrdersOrd_ProdViewSource" Source="{Binding Ord_Prod, Source={StaticResource employeesOrdersViewSource}}"/>
+    </Page.Resources>
 
-    <Grid>
+    <Grid DataContext="{StaticResource employeesViewSource}">
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0">Employees</Label>
+        <DataGrid x:Name="employeesDataGrid" Style="{StaticResource dataGridStyle}" AutoGenerateColumns="False" Grid.Row="1" Grid.RowSpan="6" Grid.Column="0" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="employee_idColumn" Binding="{Binding employee_id}" Header="employee id" Width="Auto"/>
+                <DataGridTextColumn x:Name="employee_first_nameColumn" Binding="{Binding employee_first_name}" Header="employee first name" Width="Auto"/>
+                <DataGridTextColumn x:Name="employee_nameColumn" Binding="{Binding employee_name}" Header="employee name" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="ordersDataGrid" Style="{StaticResource dataGridStyle}" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource employeesOrdersViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="Auto"/>
+                <DataGridTemplateColumn x:Name="order_dateColumn" Header="order date" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding order_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsHitTestVisible="False"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn x:Name="client_idColumn" Binding="{Binding client_id}" Header="client id" Width="Auto"/>
+                <DataGridTextColumn x:Name="order_clientFirstNameColumn" Binding="{Binding Clients.client_first_name}" Header="client first name" Width="Auto"/>
+                <DataGridTextColumn x:Name="order_clientNameColumn" Binding="{Binding Clients.client_name}" Header="client name" Width="Auto"/>
+                <DataGridTextColumn x:Name="order_clientFirmEvidenceNumberColumn" Binding="{Binding Clients.firm_evidence_number}" Header="client FEN" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Style="{StaticResource supportingLabel}" Grid.Row="0" Grid.Column="1" Margin="20,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            Orders assigned to employee:
+        </Label>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" Margin="10,0,0,0">Add new employee:</Label>
+        <TextBox x:Name="AddFirstNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Margin="50,0,0,10" Text="First name" GotFocus="RemovePlaceHolder" MaxLength="20" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="AddLastNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Margin="50,0,0,10" Text="Last name" GotFocus="RemovePlaceHolder" MaxLength="25" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Add" Grid.Column="1" Grid.Row="3" Margin="0,0,70,7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Add_Click"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0">Remove employee:</Label>
+        <TextBox x:Name="RemoveIDTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="4" Grid.Column="1" Text="ID" Margin="170,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="30" GotFocus="RemovePlaceHolder"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Remove" Grid.Column="1" Grid.Row="4" Click="Remove_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,7"/>
+        
+        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" Margin="10,0,0,0">Update employee's last name:</Label>
+        <TextBox x:Name="UpdateIDTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="ID" Margin="170,0,0,10" VerticalAlignment="Bottom" Width="30" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="UpdateLastNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Margin="50,0,0,10" Text="New last name" GotFocus="RemovePlaceHolder" MaxLength="25" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Update" Grid.Column="1" Grid.Row="5" Click="Update_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,7"/>
+
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="6" Grid.Column="1" Margin="10,0,0,0">Find employee:</Label>
+        <TextBox x:Name="FindFirstNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="6" Grid.Column="1" Margin="50,0,0,15" Text="First name" GotFocus="RemovePlaceHolder" MaxLength="20" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="FindLastNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="6" Grid.Column="1" Margin="50,0,0,15" Text="Last name" GotFocus="RemovePlaceHolder" MaxLength="25" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Find" Grid.Column="1" Grid.Row="6" Margin="0,0,70,12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Find_Click"/>
+
     </Grid>
 </Page>

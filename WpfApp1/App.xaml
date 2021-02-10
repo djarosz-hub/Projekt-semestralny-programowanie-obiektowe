@@ -62,7 +62,14 @@
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="CanUserSortColumns" Value="True"/>
             <Setter Property="Margin" Value="15"/>
+            <!--<Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFCBFF99" />
+                --><!--<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF982C2C" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFA2399C" />--><!--
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="Black" />
+            </Style.Resources>-->
         </Style>
+       
         <Style x:Key="pageOptionTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="Margin" Value="50,0,0,0"/>
             <Setter Property="Width" Value="150"/>

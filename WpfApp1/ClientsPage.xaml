@@ -46,7 +46,7 @@
                 <DataGridTemplateColumn x:Name="order_dateColumn" Header="order date" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding order_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                            <DatePicker SelectedDate="{Binding order_date, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsHitTestVisible="False"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -54,7 +54,7 @@
                 <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Style="{StaticResource supportingLabel}" Grid.Row="0" Grid.Column="1" Margin="20,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left">Client orders:</Label>
+        <Label Style="{StaticResource supportingLabel}" Grid.Row="0" Grid.Column="1" Margin="20,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left">Client orders:</Label>
         <DataGrid x:Name="ord_ProdDataGrid" AutoGenerateColumns="False" Grid.Column="1" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersOrd_ProdViewSource}}" Margin="54.291,29.873,45.782,4.891" Grid.Row="4" Grid.RowSpan="3" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="order_idColumn1" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
