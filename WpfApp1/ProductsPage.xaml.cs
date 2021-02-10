@@ -23,10 +23,12 @@ namespace WpfApp1
     {
         MydbEntities db;
         CollectionViewSource productViewSource;
-        public ProductsPage(MydbEntities db)
+        OSHome commander;
+        public ProductsPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
+            this.commander = commander;
             productViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
             DataContext = this;
         }
@@ -35,6 +37,35 @@ namespace WpfApp1
         {
             db.Products.Load();
             productViewSource.Source = db.Products.Local;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        public void RemovePlaceHolder(object sender, EventArgs e)
+        {
+            string[] basics = new string[] { "ID", "First name", "Last name", "New last name" };
+            TextBox tb = sender as TextBox;
+            if (basics.Contains(tb.Text))
+            {
+                tb.Text = "";
+            }
         }
     }
 }

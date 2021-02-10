@@ -9,6 +9,7 @@
       Title="ProductsPage" Loaded="Page_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="productsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Products}, CreateList=True}"/>
+        <CollectionViewSource x:Key="categoriesViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Categories}, CreateList=True}"/>
     </Page.Resources>
 
     <Grid DataContext="{StaticResource productsViewSource}">
@@ -16,20 +17,52 @@
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="430"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0">Products</Label>
-        <DataGrid x:Name="productsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="15,139,544.782,39.436" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0" Grid.Column="0">Products</Label>
+        <DataGrid x:Name="productsDataGrid" Style="{StaticResource dataGridStyle}" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Grid.Row="1" Grid.RowSpan="6" Grid.Column="0" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="product_nameColumn" Binding="{Binding product_name}" Header="product name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="categoryColumn" Binding="{Binding category}" Header="category" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="producerColumn" Binding="{Binding producer}" Header="producer" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding price}" Header="price" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="Auto"/>
+                <DataGridTextColumn x:Name="product_nameColumn" Binding="{Binding product_name}" Header="product name" Width="Auto"/>
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding price}" Header="price" Width="Auto"/>
+                <DataGridTextColumn x:Name="categoryColumn" Binding="{Binding Categories.category_name}" Header="category" Width="Auto"/>
+                <DataGridTextColumn x:Name="producerColumn" Binding="{Binding Producers.producer_name}" Header="producer" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" Margin="10,0,0,0">Add new product:</Label>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,35,2">,</Label>
+        
+        <TextBox x:Name="AddPriceIntTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Integer part" Margin="-125,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="6" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="AddatePriceDecimalTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Decimal part" Margin="55,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="6" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="AddNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Text="Product name" Margin="30,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="85" GotFocus="RemovePlaceHolder"/>
+
+        <Button Style="{StaticResource pageCommandButton}" Content="Add" Grid.Column="1" Grid.Row="3" Margin="0,0,70,7" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Add_Click"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0">Remove product:</Label>
+        <TextBox x:Name="RemoveIDTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="4" Grid.Column="1" Text="ID" Margin="100,0,0,11" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="30" GotFocus="RemovePlaceHolder"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Remove" Grid.Column="1" Grid.Row="4" Click="Remove_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,7"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" Margin="10,0,0,0">Update product's price:</Label>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,35,2">,</Label>
+        <TextBox x:Name="UpdateIDTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="ID" Margin="85,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="30" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="UpdatePriceIntTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="Integer part" Margin="-125,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="6" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="UpdatePriceDecimalTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="Decimal part" Margin="55,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="6" GotFocus="RemovePlaceHolder"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Update" Grid.Column="1" Grid.Row="5" Click="Update_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,7"/>
+
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="6" Grid.Column="1" Margin="10,0,0,0">Find product:</Label>
+        <TextBox x:Name="FindNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="6" Grid.Column="1" Text="Product name" Margin="48,0,0,16" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="85" GotFocus="RemovePlaceHolder"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Find" Grid.Column="1" Grid.Row="6" Margin="0,0,70,12" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Find_Click"/>
+
     </Grid>
 </Page>

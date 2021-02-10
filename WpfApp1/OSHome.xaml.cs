@@ -35,7 +35,7 @@ namespace WpfApp1
             ordersPage = new OrdersPage(db);
             categoriesPage = new CategoriesPage(db, this);
             producersPage = new ProducersPage(db, this);
-            productsPage = new ProductsPage(db);
+            productsPage = new ProductsPage(db,this);
             employeesPage = new EmployeesPage(db, this);
             clientsPage = new ClientsPage(db, this);
         }
