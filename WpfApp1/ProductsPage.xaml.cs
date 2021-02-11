@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using System.Data;
 
 namespace WpfApp1
 {
@@ -23,13 +24,16 @@ namespace WpfApp1
     {
         MydbEntities db;
         CollectionViewSource productViewSource;
+        CollectionViewSource catViewSource;
         OSHome commander;
+        List<ItemsForCatGrid> catList = new List<ItemsForCatGrid>();
         public ProductsPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
             this.commander = commander;
             productViewSource = ((CollectionViewSource)(FindResource("productsViewSource")));
+            catViewSource = ((CollectionViewSource)(FindResource("categoriesViewSource")));
             DataContext = this;
         }
 
@@ -37,8 +41,35 @@ namespace WpfApp1
         {
             db.Products.Load();
             productViewSource.Source = db.Products.Local;
+            catViewSource.Source = db.Categories.Local;
+            FillAvailableCategories();
+            FillAvailableProducers();
         }
 
+        private void Check_Click(object sender, RoutedEventArgs e)
+        {
+            if(category_nameComboBox.SelectedItem == null)
+            {
+                MessageBox.Show($"Empty category.");
+                return;
+            }
+            RefillCatList();
+        }
+        private void RefillCatList()
+        {
+            catList.Clear();
+            ItemsInCategoryDG.Items.Clear();
+            var id = category_nameComboBox.SelectedItem as Categories;
+            int categoryId = id.category_id;
+            var products = db.Products.Where(x => x.category == categoryId);
+            foreach (var p in products)
+            {
+                string producerName = db.Producers.Single(x => x.producer_id == p.producer).producer_name;
+                catList.Add(new ItemsForCatGrid { id = p.product_id, product_name = p.product_name, producer = producerName, price = p.price });
+            }
+            foreach (var i in catList)
+                ItemsInCategoryDG.Items.Add(i);
+        }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
 
@@ -60,12 +91,41 @@ namespace WpfApp1
         }
         public void RemovePlaceHolder(object sender, EventArgs e)
         {
-            string[] basics = new string[] { "ID", "First name", "Last name", "New last name" };
+            string[] basics = new string[] { "ID", "Product name", "Integer part", "Decimal part" };
             TextBox tb = sender as TextBox;
             if (basics.Contains(tb.Text))
             {
                 tb.Text = "";
             }
+        }
+        private void FillAvailableCategories()
+        {
+            foreach (var c in db.Categories)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = c.category_name;
+                CategoriesCB.Items.Add(item);
+            }
+        }
+        private void FillAvailableProducers()
+        {
+            foreach (var p in db.Producers)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = p.producer_name;
+                ProducersCB.Items.Add(item);
+            }
+        }
+        private void FillProductsAssignedToChoosenCategory()
+        {
+
+        }
+        class ItemsForCatGrid
+        {
+            public int id { get; set; }
+            public string product_name { get; set; }
+            public string producer { get; set; }
+            public decimal price { get; set; }
         }
     }
 }
