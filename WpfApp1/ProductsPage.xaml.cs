@@ -66,6 +66,11 @@ namespace WpfApp1
                 string producerName = db.Producers.Single(x => x.producer_id == p.producer).producer_name;
                 catList.Add(new ItemsForCatGrid { id = p.product_id, product_name = p.product_name, producer = producerName, price = p.price });
             }
+            if(catList.Count() == 0)
+            {
+                MessageBox.Show($"No products assigned to this category.");
+                return;
+            }
             foreach (var i in catList)
                 ItemsInCategoryDG.Items.Add(i);
         }

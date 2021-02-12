@@ -70,7 +70,7 @@
         <Button Style="{StaticResource pageCommandButton}" Content="Remove" Grid.Column="1" Grid.Row="4" Click="Remove_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,-3"/>
 
         <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" Margin="10,0,0,0">Update product's price:</Label>
-        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,35,2">,</Label>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,35,-7">,</Label>
         <TextBox x:Name="UpdateIDTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="ID" Margin="85,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="30" GotFocus="RemovePlaceHolder"/>
         <TextBox x:Name="UpdatePriceIntTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="Integer part" Margin="-125,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="6" GotFocus="RemovePlaceHolder"/>
         <TextBox x:Name="UpdatePriceDecimalTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="1" Text="Decimal part" Margin="55,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="75" MaxLength="2" GotFocus="RemovePlaceHolder"/>
