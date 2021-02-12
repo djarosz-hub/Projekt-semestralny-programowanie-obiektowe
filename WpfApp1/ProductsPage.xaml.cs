@@ -48,19 +48,18 @@ namespace WpfApp1
 
         private void Check_Click(object sender, RoutedEventArgs e)
         {
-            if(category_nameComboBox.SelectedItem == null)
+            if (category_nameComboBox.SelectedItem == null)
             {
                 MessageBox.Show($"Empty category.");
                 return;
             }
-            RefillCatList();
+            RefillProductsByCatList();
         }
-        private void RefillCatList()
+        private void RefillProductsByCatList()
         {
             catList.Clear();
             ItemsInCategoryDG.Items.Clear();
-            var id = category_nameComboBox.SelectedItem as Categories;
-            int categoryId = id.category_id;
+            var categoryId = (category_nameComboBox.SelectedItem as Categories).category_id;
             var products = db.Products.Where(x => x.category == categoryId);
             foreach (var p in products)
             {
@@ -72,22 +71,139 @@ namespace WpfApp1
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-
+            var cat = db.Categories.SingleOrDefault(x => x.category_name == AddCategoriesCB.Text);
+            var prod = db.Producers.SingleOrDefault(x => x.producer_name == AddProducersCB.Text);
+            if (cat == null || prod == null)
+            {
+                MessageBox.Show("Choose correct category and producer");
+                return;
+            }
+            if (commander.IsInputInvalid(AddNameTB.Text, "Product name"))
+            {
+                MessageBox.Show($"Product name must not be empty");
+                return;
+            }
+            string integerPartS = AddPriceIntTB.Text.Trim();
+            string decimalPartS = AddatePriceDecimalTB.Text.Trim();
+            if (!int.TryParse(integerPartS, out int integerPart) || !int.TryParse(decimalPartS, out int decimalPart))
+            {
+                MessageBox.Show($"Invalid value of price.");
+                return;
+            }
+            string concatPrice = integerPartS + "." + decimalPartS;
+            if (!decimal.TryParse(concatPrice, out decimal newPrice))
+            {
+                MessageBox.Show($"Invalid price");
+                return;
+            }
+            string productName = AddNameTB.Text;
+            int categoryId = cat.category_id;
+            int producerId = prod.producer_id;
+            if (commander.ExistsInDatabaseByNameCaseSensitive(OSHome.DbSources.Products, productName))
+            {
+                Products existingProduct = db.Products.Single(x => x.product_name == productName);
+                if (existingProduct.price == newPrice && existingProduct.category == categoryId && existingProduct.producer == producerId)
+                {
+                    MessageBox.Show($"Product with values:\nName: {productName} already exists. (ID = {existingProduct.product_id})");
+                    return;
+                }
+            }
+            Products newProduct = new Products();
+            newProduct.product_name = productName;
+            newProduct.category = (short)categoryId;
+            newProduct.producer = (short)producerId;
+            newProduct.price = newPrice;
+            db.Products.Add(newProduct);
+            db.SaveChanges();
+            if (category_nameComboBox.Text != string.Empty && newProduct.category == (category_nameComboBox.SelectedItem as Categories).category_id)
+                RefillProductsByCatList();
+            MessageBox.Show($"Successfully created new product:\nID: {newProduct.product_name}");
+            AddCategoriesCB.SelectedIndex = 0;
+            AddProducersCB.SelectedIndex = 0;
+            AddNameTB.Text = "Product name";
+            AddPriceIntTB.Text = "Integer part";
+            AddatePriceDecimalTB.Text = "Decimal part";
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
+            string stringId = RemoveIDTB.Text.Trim();
+            if (commander.IsInputInvalid(stringId, "ID") || !int.TryParse(stringId, out int id))
+            {
+                MessageBox.Show($"{stringId} is not valid id.");
+                return;
+            }
+            if (!commander.ExistsInDatabaseByID(OSHome.DbSources.Products, id) || commander.IsAssignedToEntity(OSHome.DbSources.Products, id))
+            {
+                MessageBox.Show($"Product doesn't exist in database or is already assigned to some order.");
+                return;
+            }
+            commander.RemoveFromDb(OSHome.DbSources.Products, id);
+            MessageBox.Show($"Successfully removed from database.");
+            RemoveIDTB.Text = "ID";
 
         }
-
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-
+            string stringId = UpdateIDTB.Text.Trim();
+            if (commander.IsInputInvalid(stringId, "ID") || !int.TryParse(stringId, out int id))
+            {
+                MessageBox.Show($"{stringId} is not valid id.");
+                return;
+            }
+            if (!commander.ExistsInDatabaseByID(OSHome.DbSources.Products, id))
+            {
+                MessageBox.Show($"Product doesn't exist in database.");
+                return;
+            }
+            string integerPartS = UpdatePriceIntTB.Text.Trim();
+            string decimalPartS = UpdatePriceDecimalTB.Text.Trim();
+            if (!int.TryParse(integerPartS, out int integerPart) || !int.TryParse(decimalPartS, out int decimalPart))
+            {
+                MessageBox.Show($"Invalid value of new price.");
+                return;
+            }
+            string concatPrice = integerPartS + "." + decimalPartS;
+            if (!decimal.TryParse(concatPrice, out decimal newPrice))
+            {
+                MessageBox.Show($"Invalid price");
+                return;
+            }
+            Products existingProduct = db.Products.Single(x => x.product_id == id);
+            if (existingProduct.price == newPrice)
+            {
+                MessageBox.Show($"New price is same as current price");
+                return;
+            }
+            existingProduct.price = newPrice;
+            productsDataGrid.Items.Refresh();
+            db.SaveChanges();
+            if (existingProduct.category == (category_nameComboBox.SelectedItem as Categories).category_id)
+                RefillProductsByCatList();
+            MessageBox.Show($"Successfully updated price of: {existingProduct.product_name} into: {newPrice}");
         }
-
         private void Find_Click(object sender, RoutedEventArgs e)
         {
-
+            string productName = FindNameTB.Text.Trim();
+            if (commander.IsInputInvalid(productName, "Product name"))
+            {
+                MessageBox.Show($"Invalid or empty input.");
+                return;
+            }
+            var products = db.Products.Where(x => x.product_name.ToLower() == productName.ToLower());
+            if (products.Count() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach(var p in products)
+                {
+                string category = db.Categories.Single(x => x.category_id == p.category).category_name;
+                string producer = db.Producers.Single(x => x.producer_id == p.producer).producer_name;
+                    sb.Append($"ID: {p.product_id}\tName: {p.product_name}\tCategory: {category}\tProducer: {producer}\n");
+                }
+                MessageBox.Show($"Found:\n{sb}");
+                return;
+            }
+            MessageBox.Show($"Not found.");
         }
         public void RemovePlaceHolder(object sender, EventArgs e)
         {
@@ -104,7 +220,7 @@ namespace WpfApp1
             {
                 ComboBoxItem item = new ComboBoxItem();
                 item.Content = c.category_name;
-                CategoriesCB.Items.Add(item);
+                AddCategoriesCB.Items.Add(item);
             }
         }
         private void FillAvailableProducers()
@@ -113,12 +229,8 @@ namespace WpfApp1
             {
                 ComboBoxItem item = new ComboBoxItem();
                 item.Content = p.producer_name;
-                ProducersCB.Items.Add(item);
+                AddProducersCB.Items.Add(item);
             }
-        }
-        private void FillProductsAssignedToChoosenCategory()
-        {
-
         }
         class ItemsForCatGrid
         {

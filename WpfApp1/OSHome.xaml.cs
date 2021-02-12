@@ -35,7 +35,7 @@ namespace WpfApp1
             ordersPage = new OrdersPage(db);
             categoriesPage = new CategoriesPage(db, this);
             producersPage = new ProducersPage(db, this);
-            productsPage = new ProductsPage(db,this);
+            productsPage = new ProductsPage(db, this);
             employeesPage = new EmployeesPage(db, this);
             clientsPage = new ClientsPage(db, this);
         }
@@ -43,6 +43,13 @@ namespace WpfApp1
         {
             foreach (char c in input)
                 if (!char.IsLetter(c))
+                    return false;
+            return true;
+        }
+        internal bool DigitInputOnly(string input)
+        {
+            foreach (char c in input)
+                if (!char.IsDigit(c))
                     return false;
             return true;
         }
@@ -70,7 +77,14 @@ namespace WpfApp1
                         break;
                     }
                 case DbSources.Products:
-                    break;
+                    {
+                        foreach (var o in db.Ord_Prod)
+                        {
+                            if (o.product_id == index)
+                                return true;
+                        }
+                        break;
+                    }
                 case DbSources.Employees:
                     {
                         foreach (var o in db.Orders)
@@ -108,7 +122,14 @@ namespace WpfApp1
                         break;
                     }
                 case DbSources.Products:
-                    break;
+                    {
+                        foreach (var p in db.Products)
+                        {
+                            if (p.product_id == index)
+                                return true;
+                        }
+                        break;
+                    }
                 case DbSources.Employees:
                     {
                         foreach (var e in db.Employees)
@@ -184,7 +205,12 @@ namespace WpfApp1
                         break;
                     }
                 case DbSources.Products:
-                    break;
+                    {
+                        foreach (var p in db.Products)
+                            if (p.product_name == input)
+                                return true;
+                        break;
+                    }
                 case DbSources.Employees:
                     break;
                 case DbSources.Clients:
@@ -211,7 +237,12 @@ namespace WpfApp1
                         break;
                     }
                 case DbSources.Products:
-                    break;
+                    {
+                        Products productToRemove = db.Products.Single(x => x.product_id == index);
+                        db.Products.Remove(productToRemove);
+                        db.SaveChanges();
+                        break;
+                    }
                 case DbSources.Employees:
                     {
                         Employees employeeToRemove = db.Employees.Single(x => x.employee_id == index);

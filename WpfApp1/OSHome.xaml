@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="OrderSupportV1 Main">
+      Title="OrderSupport v1 Main">
 
     <Grid>
         <Grid.Background>
@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0">Order Support V1</Label>
+        <Label Style="{StaticResource headerTextStyle}" Grid.Row="0">Order Support v1</Label>
         <StackPanel Style="{StaticResource stackPanelOptionsStyle}" Grid.Row="1" Width="250">
             <Label Style="{StaticResource labelStyle}" Margin="5,0,0,0">Available actions:</Label>
             <Label Style="{StaticResource labelStyle}">Creating</Label>
