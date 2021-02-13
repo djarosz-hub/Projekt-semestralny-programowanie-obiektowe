@@ -6,11 +6,9 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="ClientsPage" Loaded="Page_Loaded">
+      Title="ClientsPage">
     <Page.Resources>
         <CollectionViewSource x:Key="clientsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Clients}, CreateList=True}"/>
-        <!--<CollectionViewSource x:Key="clientsOrdersViewSource" Source="{Binding Orders, Source={StaticResource clientsViewSource}}"/>
-        <CollectionViewSource x:Key="clientsOrdersOrd_ProdViewSource" Source="{Binding Ord_Prod, Source={StaticResource clientsOrdersViewSource}}"/>-->
     </Page.Resources>
 
     <Grid DataContext="{StaticResource clientsViewSource}">
@@ -25,7 +23,6 @@
             <RowDefinition Height="80"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
-            <!--<RowDefinition Height="0"/>-->
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -51,12 +48,6 @@
                 <DataGridTextColumn Header="total price" Width="*" Binding="{Binding Path=totalPrice}"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <!--<Label Style="{StaticResource labelStyle}" Margin="20,-10,0,0" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="90" Grid.RowSpan="2" Width="145">
-            <Label.Content>
-                <AccessText TextWrapping="Wrap" Text="Products in order:" Width="113"></AccessText>
-            </Label.Content>
-        </Label>-->
         <DataGrid x:Name="ProductsInOrderDG" Style="{StaticResource dataGridStyle}" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,15,45">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
@@ -67,6 +58,7 @@
                 <DataGridTextColumn Header="sum" Binding="{Binding sum}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
+        
         <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom">Add new client:</Label>
         <TextBox x:Name="AddFirstNameTB" Style="{StaticResource pageOptionTextBox}" Text="First name" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Margin="25,0,0,35" MaxLength="20" Width="130" GotFocus="RemovePlaceHolder" />
         <TextBox x:Name="AddLastNameTB" Style="{StaticResource pageOptionTextBox}" Text="Last name" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" MaxLength="25" Width="130" Margin="-30,0,0,35" GotFocus="RemovePlaceHolder"/>
@@ -82,25 +74,5 @@
         <TextBox x:Name="UpdateFENTB" Style="{StaticResource pageOptionTextBox}" Text="New FEN" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,50" Width="78" GotFocus="RemovePlaceHolder"/>
         <TextBox x:Name="UpdateIdNTB" Style="{StaticResource pageOptionTextBox}" Text="ID" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,-10" Width="40" GotFocus="RemovePlaceHolder"/>
         <Button Style="{StaticResource pageCommandButton}" Grid.Column="1" Grid.Row="6" Content="Update" Margin="0,8,15,0" Click="Update_Click" HorizontalAlignment="Right"/>
-        <!--<DataGrid x:Name="ordersDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersViewSource}}" Margin="31,71.691,391.782,63.436" Grid.RowSpan="4" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="4">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="client_idColumn1" Binding="{Binding client_id}" Header="client id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
-                <DataGridTextColumn Binding="{Binding order_date, StringFormat=dd/mm/yyyy hh:mm tt}" Header="order date" Width="125"/>
-                <DataGridTextColumn x:Name="order_employeeFNColumn" Binding="{Binding Employees.employee_first_name}" Header="emp. first name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="order_employeeLNColumn" Binding="{Binding Employees.employee_name}" Header="emp. last name" Width="SizeToHeader"/>
-                <DataGridTextColumn Header="total price" />
-            </DataGrid.Columns>
-        </DataGrid>-->
-        <!--<DataGrid x:Name="ord_ProdDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersOrd_ProdViewSource}}" Margin="10,71.091,489.782,10.091" Grid.RowSpan="3" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="order_idColumn1" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="SizeToHeader"/>
-                <DataGridTextColumn Binding="{Binding Products.product_name}" Header="product name"/>
-                <DataGridTextColumn Binding="{Binding Products.price}" Header="price"/>
-                <DataGridTextColumn x:Name="quantityColumn" Binding="{Binding quantity}" Header="quantity" Width="SizeToHeader"/>
-            </DataGrid.Columns>
-        </DataGrid>-->
-
     </Grid>
 </Page>

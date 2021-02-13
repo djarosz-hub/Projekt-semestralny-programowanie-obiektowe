@@ -6,20 +6,50 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="OrdersPage">
+      Title="OrdersPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="700"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Style="{StaticResource subHeaderTextStyle}" >Orders</Label>
-        <TextBox x:Name="testbox" HorizontalAlignment="Left" Height="129" Margin="190,400,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="577"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="167,317,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Label Style="{StaticResource subHeaderTextStyle}">Orders</Label>
+        <DataGrid x:Name="OrdersDG" Style="{StaticResource dataGridStyle}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,15,15,25" SelectionChanged="FillOrderProducts">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
+                <DataGridTextColumn Header="order date" Binding="{Binding orderDate}" Width="130"/>
+                <DataGridTextColumn Header="client id" Binding="{Binding clientId}" Width="Auto"/>
+                <DataGridTextColumn Header="client full name" Binding="{Binding clientFullName}" Width="*"/>
+                <DataGridTextColumn Header="employee id" Binding="{Binding employeeId}" Width="Auto"/>
+                <DataGridTextColumn Header="employee full name" Binding="{Binding employeeFullName}" Width="*"/>
+                <DataGridTextColumn Header="total price" Binding="{Binding totalPrice}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Style="{StaticResource labelStyle}" Content="Products in order:" Grid.Row="4" Grid.Column="0" Margin="20,-20,0,0"/>
+        <DataGrid x:Name="ProductsInOrderDG" Style="{StaticResource dataGridStyle}" Grid.Row="4" Grid.RowSpan="3" Grid.Column="0" Margin="15,25,15,15">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
+                <DataGridTextColumn Header="product id" Binding="{Binding productId}" Width="Auto"/>
+                <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="130"/>
+                <DataGridTextColumn Header="category" Binding="{Binding productCategory}" Width="*"/>
+                <DataGridTextColumn Header="producer" Binding="{Binding producer}" Width="*"/>
+                <DataGridTextColumn Header="price" Binding="{Binding price}" Width="*"/>
+                <DataGridTextColumn Header="quantity" Binding="{Binding quantity}" Width="*"/>
+                <DataGridTextColumn Header="sum" Binding="{Binding sum}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Style="{StaticResource buttonStyle}" Content="Manage orders" Grid.Row="5" Grid.Column="1" Width="170" Margin="0" HorizontalAlignment="Left"/>
     </Grid>
 </Page>

@@ -298,4 +298,18 @@ namespace WpfApp1
             this.NavigationService.Navigate(clientsPage);
         }
     }
+    internal class ProductOrder
+    {
+        public int orderId { get; set; }
+        public int productId { get; set; }
+        public string productName { get; set; }
+        public decimal price { get; set; }
+        public int quantity { get; set; }
+        public decimal sum { get; set; }
+    }
+    internal class DetailedProductOrder : ProductOrder
+    {
+        public string productCategory { get; set; }
+        public string producer { get; set; }
+    }
 }
