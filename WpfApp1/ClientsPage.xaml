@@ -52,18 +52,19 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Style="{StaticResource labelStyle}" Margin="20,-10,0,0" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="90" Grid.RowSpan="2" Width="145">
+        <!--<Label Style="{StaticResource labelStyle}" Margin="20,-10,0,0" Grid.Row="3" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="90" Grid.RowSpan="2" Width="145">
             <Label.Content>
                 <AccessText TextWrapping="Wrap" Text="Products in order:" Width="113"></AccessText>
             </Label.Content>
-        </Label>
-        <DataGrid Style="{StaticResource dataGridStyle}" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="140,0,15,45">
+        </Label>-->
+        <DataGrid x:Name="ProductsInOrderDG" Style="{StaticResource dataGridStyle}" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,15,45">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
                 <DataGridTextColumn Header="product id" Binding="{Binding productId}" Width="Auto"/>
-                <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="*"/>
-                <DataGridTextColumn Header="price" Binding="{Binding price}" Width="Auto"/>
-                <DataGridTextColumn Header="quantity" Binding="{Binding quantity}" Width="Auto"/>
+                <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="130"/>
+                <DataGridTextColumn Header="price" Binding="{Binding price}" Width="*"/>
+                <DataGridTextColumn Header="quantity" Binding="{Binding quantity}" Width="*"/>
+                <DataGridTextColumn Header="sum" Binding="{Binding sum}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom">Add new client:</Label>

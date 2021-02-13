@@ -26,6 +26,7 @@ namespace WpfApp1
         OSHome commander;
         CollectionViewSource clientsViewSource;
         List<ClientOrder> clientOrdersList = new List<ClientOrder>();
+        List<ProductOrder> productsInOrderList = new List<ProductOrder>();
         public ClientsPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
@@ -63,13 +64,21 @@ namespace WpfApp1
             foreach (var item in clientOrdersList)
                 ClientOrdersDG.Items.Add(item);
         }
-        class ClientOrder
+        private void ClientOrderSelection(object sender, SelectionChangedEventArgs e)
         {
-            public int clientId { get; set; }
-            public int orderId { get; set; }
-            public string orderDate { get; set; }
-            public string employeeFullName { get; set; }
-            public decimal totalPrice { get; set; }
+            productsInOrderList.Clear();
+            ProductsInOrderDG.Items.Clear();
+            if (ClientOrdersDG.SelectedItem == null) return;
+            int orderId = ((ClientOrder)ClientOrdersDG.SelectedItem).orderId;
+            var productsInOrder = db.Ord_Prod.Where(x => x.order_id == orderId);
+            foreach(var p in productsInOrder)
+            {
+                var product = db.Products.Single(x => x.product_id == p.product_id);
+                decimal sum = p.quantity * product.price;
+                productsInOrderList.Add(new ProductOrder { orderId = orderId, productId = p.product_id, productName = product.product_name, price = product.price, quantity = p.quantity, sum = sum });
+            }
+            foreach (var item in productsInOrderList)
+                ProductsInOrderDG.Items.Add(item);
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -228,10 +237,23 @@ namespace WpfApp1
                 tb.Text = "";
             }
         }
-
-        private void ClientOrderSelection(object sender, SelectionChangedEventArgs e)
+        class ClientOrder
         {
-
+            public int clientId { get; set; }
+            public int orderId { get; set; }
+            public string orderDate { get; set; }
+            public string employeeFullName { get; set; }
+            public decimal totalPrice { get; set; }
         }
+        class ProductOrder
+        {
+            public int orderId { get; set; }
+            public int productId { get; set; }
+            public string productName { get; set; }
+            public decimal price { get; set; }
+            public int quantity { get; set; }
+            public decimal sum { get; set; }
+        }
+        
     }
 }
