@@ -53,6 +53,15 @@ namespace WpfApp1
                     return false;
             return true;
         }
+        internal bool LettersAndDigitsInputOnly(string input)
+        {
+            foreach (char c in input)
+            {
+                if (!char.IsLetterOrDigit(c))
+                    return false;
+            }
+            return true;
+        }
         internal bool IsInputInvalid(string input, string pattern) => (string.IsNullOrEmpty(input) || input == pattern) ? true : false;
         internal bool IsAssignedToEntity(DbSources sourceCat, int index)
         {
@@ -140,7 +149,14 @@ namespace WpfApp1
                     }
                     break;
                 case DbSources.Clients:
-                    break;
+                    {
+                        foreach (var c in db.Clients)
+                        {
+                            if (c.client_id == index)
+                                return true;
+                        }
+                        break;
+                    }
             }
             return false;
         }
@@ -177,7 +193,10 @@ namespace WpfApp1
                 case DbSources.Employees:
                     break;
                 case DbSources.Clients:
-                    break;
+                    {
+
+                        break;
+                    }
             }
             found = "";
             return false;

@@ -41,7 +41,7 @@
         <DataGrid x:Name="ordersDataGrid" Style="{StaticResource dataGridStyle}" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource employeesOrdersViewSource}}" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="Auto"/>
-                <DataGridTextColumn Binding="{Binding order_date, StringFormat=dd/mm/yyyy hh:mm tt}" Header="order date" Width="120"/>
+                <DataGridTextColumn Binding="{Binding order_date, StringFormat=dd/mm/yyyy hh:mm tt}" Header="order date" Width="125"/>
                 <DataGridTextColumn x:Name="client_idColumn" Binding="{Binding client_id}" Header="client id" Width="Auto"/>
                 <DataGridTextColumn x:Name="order_clientFirstNameColumn" Binding="{Binding Clients.client_first_name}" Header="client first name" Width="Auto"/>
                 <DataGridTextColumn x:Name="order_clientNameColumn" Binding="{Binding Clients.client_name}" Header="client name" Width="Auto"/>

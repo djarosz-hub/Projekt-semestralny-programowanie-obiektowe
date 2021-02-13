@@ -9,6 +9,8 @@
       Title="ClientsPage" Loaded="Page_Loaded">
     <Page.Resources>
         <CollectionViewSource x:Key="clientsViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Clients}, CreateList=True}"/>
+        <CollectionViewSource x:Key="clientsOrdersViewSource" Source="{Binding Orders, Source={StaticResource clientsViewSource}}"/>
+        <CollectionViewSource x:Key="clientsOrdersOrd_ProdViewSource" Source="{Binding Ord_Prod, Source={StaticResource clientsOrdersViewSource}}"/>
     </Page.Resources>
 
     <Grid DataContext="{StaticResource clientsViewSource}">
@@ -30,7 +32,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Style="{StaticResource subHeaderTextStyle}" Grid.Row="0">Clients</Label>
-        <DataGrid Style="{StaticResource dataGridStyle}" SelectedIndex="0" x:Name="clientsDataGrid" Grid.Column="0" Grid.Row="1" Grid.RowSpan="7" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected" SelectionChanged="IdSelection">
+        <DataGrid Style="{StaticResource dataGridStyle}"  x:Name="clientsDataGrid" Grid.Column="0" Grid.Row="1" Grid.RowSpan="7" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="client_idColumn" Binding="{Binding client_id}" Header="client id" Width="Auto"/>
                 <DataGridTextColumn x:Name="client_first_nameColumn" Binding="{Binding client_first_name}" Header="client first name" Width="Auto"/>
@@ -40,22 +42,22 @@
         </DataGrid>
 
         <Label Style="{StaticResource supportingLabel}" Grid.Row="0" Grid.Column="1" Margin="20,0,0,-10" VerticalAlignment="Bottom" HorizontalAlignment="Left">Client orders:</Label>
-        <DataGrid x:Name="ClientOrdersDG" Style="{StaticResource dataGridStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" >
+        <!--<DataGrid x:Name="ClientOrdersDG" Style="{StaticResource dataGridStyle}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="25,15,15,15">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="client id" Width="Auto" Binding="{Binding Path=clientId}"/>
                 <DataGridTextColumn Header="order id" Width="Auto" Binding="{Binding Path=orderId}"/>
-                <DataGridTextColumn Header="order date" Width="100" Binding="{Binding Path=orderDate}"/>
+                <DataGridTextColumn Header="order date" Width="125" Binding="{Binding Path=orderDate}"/>
                 <DataGridTextColumn Header="employee name" Width="Auto" Binding="{Binding Path=employeeFullName}"/>
                 <DataGridTextColumn Header="total price" Width="*" Binding="{Binding Path=totalPrice}"/>
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
 
         <Label Style="{StaticResource labelStyle}" Grid.Row="4" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Left" Height="90" Grid.RowSpan="2" Width="145">
             <Label.Content>
                 <AccessText TextWrapping="Wrap" Text="Products in order:" Width="113"></AccessText>
             </Label.Content>
         </Label>
-        <DataGrid Style="{StaticResource dataGridStyle}" Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Margin="140,15,15,45">
+        <!--<DataGrid Style="{StaticResource dataGridStyle}" Grid.Row="4" Grid.Column="1" Grid.RowSpan="2" Margin="140,15,15,45">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
                 <DataGridTextColumn Header="product id" Binding="{Binding productId}" Width="Auto"/>
@@ -63,22 +65,41 @@
                 <DataGridTextColumn Header="price" Binding="{Binding price}" Width="Auto"/>
                 <DataGridTextColumn Header="quantity" Binding="{Binding quantity}" Width="Auto"/>
             </DataGrid.Columns>
-        </DataGrid>
+        </DataGrid>-->
         <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom">Add new client:</Label>
-        <TextBox x:Name="AddFirstNameTB" Style="{StaticResource pageOptionTextBox}" Text="First name" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="25,0,0,35" MaxLength="20" Width="130"/>
-        <TextBox x:Name="AddLastNameTB" Style="{StaticResource pageOptionTextBox}" Text="Last name" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" MaxLength="25" Width="130" Margin="-30,0,0,35"/>
-        <TextBox x:Name="AddFENTB" Style="{StaticResource pageOptionTextBox}" Text="FEN" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,35" Width="78"/>
+        <TextBox x:Name="AddFirstNameTB" Style="{StaticResource pageOptionTextBox}" Text="First name" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="25,0,0,35" MaxLength="20" Width="130" GotFocus="RemovePlaceHolder" />
+        <TextBox x:Name="AddLastNameTB" Style="{StaticResource pageOptionTextBox}" Text="Last name" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" MaxLength="25" Width="130" Margin="-30,0,0,35" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="AddFENTB" Style="{StaticResource pageOptionTextBox}" Text="FEN" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,35" Width="78" GotFocus="RemovePlaceHolder"/>
         <Button Style="{StaticResource pageCommandButton}" Grid.Column="1" Grid.Row="6" Content="Add" HorizontalAlignment="Right" Margin="0,0,15,35" Click="Add_Click"/>
-        
+
         <Label Style="{StaticResource labelStyle}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" Margin="20,0,0,0">Find client:</Label>
-        <TextBox x:Name="FindFirstNameTB" Style="{StaticResource pageOptionTextBox}" Text="First name" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" MaxLength="20" Width="130" Margin="25,0,0,50"/>
-        <TextBox x:Name="FindLastNameTB" Style="{StaticResource pageOptionTextBox}" Text="Last name" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" MaxLength="25" Width="130" Margin="25,0,0,-10"/>
+        <TextBox x:Name="FindFirstNameTB" Style="{StaticResource pageOptionTextBox}" Text="First name" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" MaxLength="20" Width="130" Margin="25,0,0,50" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="FindLastNameTB" Style="{StaticResource pageOptionTextBox}" Text="Last name" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" MaxLength="25" Width="130" Margin="25,0,0,-10" GotFocus="RemovePlaceHolder"/>
         <Button Style="{StaticResource pageCommandButton}" Grid.Column="1" Grid.Row="7" Content="Find" Margin="-70,8,0,0" Click="Find_Click"/>
-        
-        <Label Style="{StaticResource labelStyle}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,70,0">Update FEN:</Label>
-        <TextBox x:Name="UpdateFENTB" Style="{StaticResource pageOptionTextBox}" Text="FEN" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,50" Width="78"/>
-        <TextBox x:Name="UpdateIdNTB" Style="{StaticResource pageOptionTextBox}" Text="ID" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,-10" Width="40"/>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="6" Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,35,0">Update FEN:</Label>
+        <TextBox x:Name="UpdateFENTB" Style="{StaticResource pageOptionTextBox}" Text="New FEN" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,50" Width="78" GotFocus="RemovePlaceHolder"/>
+        <TextBox x:Name="UpdateIdNTB" Style="{StaticResource pageOptionTextBox}" Text="ID" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" MaxLength="10" Margin="0,0,107,-10" Width="40" GotFocus="RemovePlaceHolder"/>
         <Button Style="{StaticResource pageCommandButton}" Grid.Column="1" Grid.Row="7" Content="Update" Margin="0,8,15,0" Click="Update_Click" HorizontalAlignment="Right"/>
+        <DataGrid x:Name="ordersDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersViewSource}}" Margin="31,71.691,391.782,63.436" Grid.RowSpan="4" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="4">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="client_idColumn1" Binding="{Binding client_id}" Header="client id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="order_idColumn" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding order_date, StringFormat=dd/mm/yyyy hh:mm tt}" Header="order date" Width="125"/>
+                <DataGridTextColumn x:Name="order_employeeFNColumn" Binding="{Binding Employees.employee_first_name}" Header="emp. first name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="order_employeeLNColumn" Binding="{Binding Employees.employee_name}" Header="emp. last name" Width="SizeToHeader"/>
+                <DataGridTextColumn Header="total price" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="ord_ProdDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="2" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource clientsOrdersOrd_ProdViewSource}}" Margin="10,71.091,489.782,10.091" Grid.RowSpan="3" RowDetailsVisibilityMode="VisibleWhenSelected" Grid.Row="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="order_idColumn1" Binding="{Binding order_id}" Header="order id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="product_idColumn" Binding="{Binding product_id}" Header="product id" Width="SizeToHeader"/>
+                <DataGridTextColumn Binding="{Binding Products.product_name}" Header="product name"/>
+                <DataGridTextColumn Binding="{Binding Products.price}" Header="price"/>
+                <DataGridTextColumn x:Name="quantityColumn" Binding="{Binding quantity}" Header="quantity" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Page>
