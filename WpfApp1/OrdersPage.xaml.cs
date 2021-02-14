@@ -31,7 +31,6 @@ namespace WpfApp1
             InitializeComponent();
             this.db = db;
             this.commander = commander;
-            createOrderPage = new CreateOrderPage(db, this.commander);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -99,6 +98,8 @@ namespace WpfApp1
 
         private void CreateOrder_Click(object sender, RoutedEventArgs e)
         {
+            if(createOrderPage == null)
+                createOrderPage = new CreateOrderPage(db, this.commander);
             this.NavigationService.Navigate(createOrderPage);
 
         }

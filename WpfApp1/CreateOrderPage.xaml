@@ -12,6 +12,41 @@
         <Grid.Background>
             <ImageBrush ImageSource="freeStockPhoto2.jpg"/>
         </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Label Style="{StaticResource subHeaderTextStyle}">Create order</Label>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="0" Margin="20,-10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Select product:</Label>
+
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="0" Grid.Column="1" Margin="10,0,0,5" HorizontalAlignment="Left" VerticalAlignment="Center">Select:</Label>
+
+        <Label Style="{StaticResource labelStyle}" Grid.Row="1" Grid.Column="1" Margin="10,-30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Client last name:</Label>
+        <TextBox x:Name="ClientNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="1" Grid.Column="1" Margin="190,-18,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="client_textChanged"/>
+        <!--<TextBox x:Name="ClientLastNameTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="1" Grid.Column="1" Margin="10,-18,15,0" HorizontalAlignment="Right" VerticalAlignment="Top" TextChanged="client_textChanged"/>-->
+        <DataGrid x:Name="ClientsDG" Style="{StaticResource dataGridStyle}" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Margin="15,15,15,30">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="client id" Binding="{Binding clientId}" Width="Auto"/>
+                <DataGridTextColumn Header="client name" Binding="{Binding clientFullName}" Width="*"/>
+                <DataGridTextColumn Header="firm evidence number" Binding="{Binding firmEvidenceNumber}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="1" Margin="10,-20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Employee last name:</Label>
+        <TextBox x:Name="EmployeeTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="3" Grid.Column="1" Margin="190, -10,0,0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <DataGrid x:Name="EmployeesDG" Style="{StaticResource dataGridStyle}" Grid.Row="3" Grid.RowSpan="2" Grid.Column="1" Margin="15,25,15,0">
+
+        </DataGrid>
+        
+        <Button Style="{StaticResource buttonStyle}" Grid.Column="1" Grid.Row="6" Content="Create new order" Width="200" Click="CreateNewOrder_Click"/>
     </Grid>
 </Page>
