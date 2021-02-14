@@ -40,7 +40,7 @@
         <Label Style="{StaticResource labelStyle}" Content="Products in order:" Grid.Row="4" Grid.Column="0" Margin="20,-20,0,0"/>
         <DataGrid x:Name="ProductsInOrderDG" Style="{StaticResource dataGridStyle}" Grid.Row="4" Grid.RowSpan="3" Grid.Column="0" Margin="15,25,15,15">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>
+                <!--<DataGridTextColumn Header="order id" Binding="{Binding orderId}" Width="Auto"/>-->
                 <DataGridTextColumn Header="product id" Binding="{Binding productId}" Width="Auto"/>
                 <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="130"/>
                 <DataGridTextColumn Header="category" Binding="{Binding productCategory}" Width="*"/>
@@ -50,6 +50,7 @@
                 <DataGridTextColumn Header="sum" Binding="{Binding sum}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Style="{StaticResource buttonStyle}" Content="Manage orders" Grid.Row="5" Grid.Column="1" Width="170" Margin="0" HorizontalAlignment="Left"/>
+        <Button Style="{StaticResource pageCommandButton}" Content="Delete selected order" Margin="0,-10,0,0" Grid.Row="4" Grid.Column="1" FontSize="15" Width="170" VerticalAlignment="Top" HorizontalAlignment="Left" Click="DeleteOrder_Click"/>
+        <Button Style="{StaticResource buttonStyle}" Content="Create new order" FontSize="16" Grid.Row="5" Grid.Column="1" Width="170" Margin="0" HorizontalAlignment="Left" Click="CreateOrder_Click"/>
     </Grid>
 </Page>

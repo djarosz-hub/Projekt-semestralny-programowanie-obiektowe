@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClassLibrary1;
 
 namespace WpfApp1
 {
@@ -21,25 +22,27 @@ namespace WpfApp1
     public partial class OrdersPage : Page
     {
         MydbEntities db;
+        CreateOrderPage createOrderPage;
+        OSHome commander;
         List<DetailedProductOrder> productsInOrderList = new List<DetailedProductOrder>();
         List<Order> ordersList = new List<Order>();
-        public OrdersPage(MydbEntities db)
+        public OrdersPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
-            RefreshOrders();
+            this.commander = commander;
+            createOrderPage = new CreateOrderPage(db, this.commander);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if(db.Orders.Count() != OrdersDG.Items.Count)
-                RefreshOrders();
+            RefreshOrders();
         }
         private void RefreshOrders()
         {
             ordersList.Clear();
             OrdersDG.Items.Clear();
-            foreach(var order in db.Orders)
+            foreach (var order in db.Orders)
             {
                 string orderDate = order.order_date.ToString("MM/dd/yyyy hh:mm tt");
 
@@ -72,26 +75,32 @@ namespace WpfApp1
             if (OrdersDG.SelectedItem == null) return;
             int selectedOrderId = ((Order)OrdersDG.SelectedItem).orderId;
             Orders selectedOrder = db.Orders.Single(x => x.order_id == selectedOrderId);
-            foreach(var item in selectedOrder.Ord_Prod)
+            foreach (var item in selectedOrder.Ord_Prod)
             {
                 var product = db.Products.Single(x => x.product_id == item.product_id);
                 decimal sum = product.price * item.quantity;
                 string producer = db.Producers.Single(x => x.producer_id == product.producer).producer_name;
                 string category = db.Categories.Single(x => x.category_id == product.category).category_name;
-                productsInOrderList.Add(new DetailedProductOrder { orderId = selectedOrder.order_id, productId = product.product_id, productName = product.product_name, price = product.price, quantity = item.quantity, sum = sum, productCategory = category, producer = producer});
+                productsInOrderList.Add(new DetailedProductOrder { /*orderId = selectedOrder.order_id, */productId = product.product_id, productName = product.product_name, price = product.price, quantity = item.quantity, sum = sum, productCategory = category, producer = producer });
             }
             foreach (var item in productsInOrderList)
-                    ProductsInOrderDG.Items.Add(item);
+                ProductsInOrderDG.Items.Add(item);
         }
-        class Order
+        private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
-            public int orderId { get; set; }
-            public string orderDate { get; set; }
-            public int clientId { get; set; }
-            public string clientFullName { get; set; }
-            public int employeeId { get; set; }
-            public string employeeFullName { get; set; }
-            public decimal totalPrice { get; set; }
+            if (OrdersDG.SelectedItem == null) return;
+            int selectedOrderId = ((Order)OrdersDG.SelectedItem).orderId;
+            Orders selectedOrder = db.Orders.Single(x => x.order_id == selectedOrderId);
+            db.Orders.Remove(selectedOrder);
+            db.SaveChanges();
+            RefreshOrders();
+            MessageBox.Show($"Order successfully deleted.");
+        }
+
+        private void CreateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(createOrderPage);
+
         }
     }
 }

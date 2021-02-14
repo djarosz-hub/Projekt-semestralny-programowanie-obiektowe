@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClassLibrary1;
 
 namespace WpfApp1
 {
@@ -231,14 +232,6 @@ namespace WpfApp1
             {
                 tb.Text = "";
             }
-        }
-        class ClientOrder
-        {
-            public int clientId { get; set; }
-            public int orderId { get; set; }
-            public string orderDate { get; set; }
-            public string employeeFullName { get; set; }
-            public decimal totalPrice { get; set; }
         }
     }
 }

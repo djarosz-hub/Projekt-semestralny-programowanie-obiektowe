@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.Entity;
 using System.Data;
+using ClassLibrary1;
 
 namespace WpfApp1
 {
@@ -236,13 +237,6 @@ namespace WpfApp1
                 item.Content = p.producer_name;
                 AddProducersCB.Items.Add(item);
             }
-        }
-        class ItemsForCatGrid
-        {
-            public int id { get; set; }
-            public string product_name { get; set; }
-            public string producer { get; set; }
-            public decimal price { get; set; }
         }
     }
 }
