@@ -25,15 +25,17 @@ namespace WpfApp1
         MydbEntities db;
         OSHome commander;
         string mostRecentClientName = "";
-        //string mostRecentEmployeeText = "";
+        string mostRecentEmployeeName = "";
         //string mostRecentProductText = "";
-        List<Client> clientsList = new List<Client>();
+        List<Clients> clientsList = new List<Clients>();
+        List<Employees> employeesList = new List<Employees>();
         public CreateOrderPage(MydbEntities db, OSHome commander)
         {
             InitializeComponent();
             this.db = db;
             this.commander = commander;
             FillAllClients();
+            FillAllEmployees();
         }
 
         private void CreateNewOrder_Click(object sender, RoutedEventArgs e)
@@ -45,13 +47,9 @@ namespace WpfApp1
             clientsList.Clear();
             ClientsDG.Items.Clear();
             foreach (var c in db.Clients)
-            {
-                clientsList.Add(new Client {clientId = c.client_id, clientFullName = c.client_first_name + " " + c.client_name, firmEvidenceNumber = c.firm_evidence_number });
-            }
-            foreach (var c in clientsList)
                 ClientsDG.Items.Add(c);
         }
-        async void client_textChanged(object sender, TextChangedEventArgs e)
+        async void Client_textChanged(object sender, TextChangedEventArgs e)
         {
             string enteredText = ClientNameTB.Text;
             mostRecentClientName = enteredText;
@@ -67,12 +65,43 @@ namespace WpfApp1
             {
                 var selectedClients = db.Clients.Where(x => x.client_name.Contains(mostRecentClientName));
                 foreach (var c in selectedClients)
-                {
-                    clientsList.Add(new Client {clientId = c.client_id, clientFullName = c.client_first_name + " " + c.client_name, firmEvidenceNumber = c.firm_evidence_number });
-                }
+                    clientsList.Add(c);
                 foreach (var c in clientsList)
                     ClientsDG.Items.Add(c);
             }
+        }
+        void FillAllEmployees()
+        {
+            employeesList.Clear();
+            EmployeesDG.Items.Clear();
+            foreach (var emp in db.Employees)
+                EmployeesDG.Items.Add(emp);
+        }
+        async void Employee_textChanged(object sender, TextChangedEventArgs e)
+        {
+            string enteredText = EmployeeNameTB.Text;
+            mostRecentEmployeeName = enteredText;
+            await Task.Delay(500);
+            employeesList.Clear();
+            EmployeesDG.Items.Clear();
+            if(EmployeeNameTB.Text == "")
+            {
+                FillAllEmployees();
+                return;
+            }
+            if(enteredText == mostRecentEmployeeName)
+            {
+                var selectedEmployees = db.Employees.Where(x => x.employee_name.Contains(mostRecentEmployeeName));
+                foreach (var emp in selectedEmployees)
+                    employeesList.Add(emp);
+                foreach (var emp in employeesList)
+                    EmployeesDG.Items.Add(emp);
+            }
+        }
+
+        private void Product_textChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }
