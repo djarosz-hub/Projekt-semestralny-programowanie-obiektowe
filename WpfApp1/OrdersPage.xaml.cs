@@ -23,14 +23,12 @@ namespace WpfApp1
     {
         MydbEntities db;
         CreateOrderPage createOrderPage;
-        OSHome commander;
         List<DetailedProductOrder> productsInOrderList = new List<DetailedProductOrder>();
         List<Order> ordersList = new List<Order>();
-        public OrdersPage(MydbEntities db, OSHome commander)
+        public OrdersPage(MydbEntities db)
         {
             InitializeComponent();
             this.db = db;
-            this.commander = commander;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -99,7 +97,7 @@ namespace WpfApp1
         private void CreateOrder_Click(object sender, RoutedEventArgs e)
         {
             if(createOrderPage == null)
-                createOrderPage = new CreateOrderPage(db, this.commander);
+                createOrderPage = new CreateOrderPage(db);
             this.NavigationService.Navigate(createOrderPage);
 
         }

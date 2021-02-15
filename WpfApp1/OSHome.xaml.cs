@@ -32,7 +32,7 @@ namespace WpfApp1
         {
             InitializeComponent();
             db = new MydbEntities();
-            ordersPage = new OrdersPage(db,this);
+            ordersPage = new OrdersPage(db);
             categoriesPage = new CategoriesPage(db, this);
             producersPage = new ProducersPage(db, this);
             productsPage = new ProductsPage(db, this);

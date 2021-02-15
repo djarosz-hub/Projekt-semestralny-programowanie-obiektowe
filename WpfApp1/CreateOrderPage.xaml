@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="900"
-      Title="CreateOrderPage">
+      Title="CreateOrderPage" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.Background>
@@ -33,24 +33,27 @@
                 <DataGridTextColumn Header="id" Binding="{Binding productId}" Width="Auto"/>
                 <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="*"/>
                 <DataGridTextColumn Header="category" Binding="{Binding productCategory}" Width="*"/>
-                <DataGridTextColumn Header="producer" Binding="{Binding producer}" Width="*"/>
+                <DataGridTextColumn Header="producer" Binding="{Binding producer}" Width="Auto"/>
                 <DataGridTextColumn Header="price" Binding="{Binding price}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Style="{StaticResource buttonStyle}" Grid.Row="3" Grid.Column="0" Content="Add to order" Height="35" FontSize="15" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,15,45"/>
+        <Button Style="{StaticResource buttonStyle}" Grid.Row="3" Grid.Column="0" Content="Add to order" Height="35" FontSize="15" Width="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,15,45" Click="AddToOrder_Click"/>
 
-        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="0" Content="Products in order:" VerticalAlignment="Bottom" Margin="10,0,0,30"/>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="3" Grid.Column="0" Content="Products in order:" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,30"/>
+        <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="0" Content="Total price:" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,25,20"/>
         <Label Style="{StaticResource labelStyle}" Grid.Row="5" Grid.Column="0" Content="Change quantity:" FontSize="15" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,25,20"/>
-        <Button Style="{StaticResource pageCommandButton}" Grid.Row="5" Grid.Column="0" Content="-" Width="30" Height="30" Margin="0,35,-10,0" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button Style="{StaticResource pageCommandButton}" Grid.Row="5" Grid.Column="0" Content="+" Width="30" Height="30" Margin="0,35,-50,0" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="TotalPriceTB" Style="{StaticResource pageOptionTextBox}" Grid.Row="5" Grid.Column="0" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Margin="0,0,90,20"/>
+        <Button Style="{StaticResource pageCommandButton}" Grid.Row="5" Grid.Column="0" Content="-" Width="30" Height="30" Margin="0,35,-10,0" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="SubstractOne_Click"/>
+        <Button Style="{StaticResource pageCommandButton}" Grid.Row="5" Grid.Column="0" Content="+" Width="30" Height="30" Margin="0,35,-50,0" HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center" Click="AddOne_Click"/>
         <DataGrid x:Name="ProductsInOrderDG" Style="{StaticResource dataGridStyle}" Grid.RowSpan="2" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="15,-20,435,50">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="id" Binding="{Binding productId}" Width="Auto"/>
-                <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="*"/>
+                <DataGridTextColumn Header="product name" Binding="{Binding productName}" Width="Auto"/>
                 <DataGridTextColumn Header="category" Binding="{Binding productCategory}" Width="*"/>
-                <DataGridTextColumn Header="producer" Binding="{Binding producer}" Width="*"/>
+                <DataGridTextColumn Header="producer" Binding="{Binding producer}" Width="Auto"/>
                 <DataGridTextColumn Header="price" Binding="{Binding price}" Width="*"/>
                 <DataGridTextColumn Header="quantity" Binding="{Binding quantity}" Width="Auto"/>
+                <DataGridTextColumn Header="sum" Binding="{Binding sum}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
