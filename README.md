@@ -6,4 +6,4 @@ Database source file is attached in main folder (Mydb.txt).
 If using Visual Studio create db locally:
 1. Choose new query (placed in SQL Server Object Explorer -> Your local sql server) and execute code attached in Mydb.txt
 2. In Server Explorer add new Data Connection to database (basically server name is: (localdb)\MSSQLLocalDB and choose Mydb from combobox below), test your connection, then add.
-3. Enjoy using app.
+3. Build and enjoy using app.
