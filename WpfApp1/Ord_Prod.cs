@@ -11,7 +11,9 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.ObjectModel;
-    
+    /// <summary>
+    /// Describes sql table model of basic class to connect orders with products included.
+    /// </summary>
     public partial class Ord_Prod
     {
         public int order_id { get; set; }

@@ -18,6 +18,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for EmployeesPage.xaml
+    /// Page enables to handle employees table and show to which orders employee is assigned.
     /// </summary>
     public partial class EmployeesPage : Page
     {
@@ -85,6 +86,8 @@ namespace WpfApp1
                 MessageBox.Show($"New last name is same as existing last name.");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             emp.employee_name = newLastName;
             db.SaveChanges();
             employeesDataGrid.Items.Refresh();
@@ -105,6 +108,8 @@ namespace WpfApp1
                 MessageBox.Show($"Employee doesn't exist in database or is already assigned to some order");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             commander.RemoveFromDb(OSHome.DbSources.Employees, id);
             MessageBox.Show("Employee successfully removed from database.");
             RemoveIDTB.Text = "ID";

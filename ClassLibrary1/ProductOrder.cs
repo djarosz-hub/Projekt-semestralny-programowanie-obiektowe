@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ClassLibrary1
 {
+    /// <summary>
+    /// Describes basic info about product placed in order.
+    /// </summary>
     public class ProductOrder
     {
         public int orderId { get; set; }

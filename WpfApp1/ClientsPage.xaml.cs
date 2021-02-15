@@ -20,6 +20,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for ClientsPage.xaml
+    /// Enables to clients and clearly shows client orders and included products.
     /// </summary>
     public partial class ClientsPage : Page
     {
@@ -217,6 +218,8 @@ namespace WpfApp1
                 MessageBox.Show($"New FEN is same as existing FEN.");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             existingClient.firm_evidence_number = stringNewFen;
             db.SaveChanges();
             clientsDataGrid.Items.Refresh();

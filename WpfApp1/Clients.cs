@@ -11,7 +11,9 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.ObjectModel;
-    
+    /// <summary>
+    /// Defines basic model of sql clients table, includes orders assigned to client
+    /// </summary>
     public partial class Clients
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ClassLibrary1
 {
+    /// <summary>
+    /// Describes order/s made by client in clear view.
+    /// </summary>
     public class ClientOrder
     {
         public int clientId { get; set; }

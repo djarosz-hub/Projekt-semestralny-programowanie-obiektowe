@@ -11,7 +11,9 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.ObjectModel;
-    
+    /// <summary>
+    /// Defines basic model of sql employees table, includes orders that employee is assigned to.
+    /// </summary>
     public partial class Employees
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

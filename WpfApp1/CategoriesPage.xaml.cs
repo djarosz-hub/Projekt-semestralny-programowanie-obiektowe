@@ -18,6 +18,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for CategoriesPage.xaml
+    /// Enables to handle categories and clearly shows products assigned to selected category.
     /// </summary>
     public partial class CategoriesPage : Page
     {
@@ -74,7 +75,8 @@ namespace WpfApp1
                 MessageBox.Show($"Category named {oldName} doesn't exists in database.");
                 return;
             }
-
+            if (!commander.FinalAcceptancePrompt())
+                return;
             Categories categoryToUpdate = new Categories();
             categoryToUpdate = db.Categories.Single(x => x.category_name == oldName);
             categoryToUpdate.category_name = newName;
@@ -118,8 +120,6 @@ namespace WpfApp1
             {
                 RemoveCat(parsedIntValue);
             }
-            MessageBox.Show("Category successfully removed from database.");
-            RemoveNameTB.Text = "Category name or ID";
         }
         private void RemoveCat(int index)
         {
@@ -128,7 +128,11 @@ namespace WpfApp1
                 MessageBox.Show($"Category is already assigned to product, can't remove.");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             commander.RemoveFromDb(OSHome.DbSources.Categories, index);
+            MessageBox.Show("Category successfully removed from database.");
+            RemoveNameTB.Text = "Category name or ID";
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {

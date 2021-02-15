@@ -12,6 +12,9 @@ namespace WpfApp1
     using System;
     using System.Collections.ObjectModel;
     
+    /// <summary>
+    /// Describes sql table modeling product, includes info about orders to which product is assigned by ord_prod class.
+    /// </summary>
     public partial class Products
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

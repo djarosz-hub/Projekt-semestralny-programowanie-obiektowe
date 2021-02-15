@@ -18,6 +18,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// Basic place which holds other pages.
     /// </summary>
     public partial class MainWindow : NavigationWindow
     {

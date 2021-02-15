@@ -20,6 +20,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for ProductsPage.xaml
+    /// Page which handles product viewing, creating and filtering by assigned category.
     /// </summary>
     public partial class ProductsPage : Page
     {
@@ -144,6 +145,8 @@ namespace WpfApp1
                 MessageBox.Show($"Product doesn't exist in database or is already assigned to some order.");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             commander.RemoveFromDb(OSHome.DbSources.Products, id);
             MessageBox.Show($"Successfully removed from database.");
             RemoveIDTB.Text = "ID";
@@ -175,6 +178,8 @@ namespace WpfApp1
                 MessageBox.Show($"Invalid price");
                 return;
             }
+            if (!commander.FinalAcceptancePrompt())
+                return;
             Products existingProduct = db.Products.Single(x => x.product_id == id);
             if (existingProduct.price == newPrice)
             {
@@ -184,7 +189,8 @@ namespace WpfApp1
             existingProduct.price = newPrice;
             productsDataGrid.Items.Refresh();
             db.SaveChanges();
-            if (existingProduct.category == (category_nameComboBox.SelectedItem as Categories).category_id)
+            var selectedCats = (Categories)category_nameComboBox.SelectedItem;
+            if ( selectedCats != null && existingProduct.category == selectedCats.category_id)
                 RefillProductsByCatList();
             MessageBox.Show($"Successfully updated price of: {existingProduct.product_name} into: {newPrice}");
         }

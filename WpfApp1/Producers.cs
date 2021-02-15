@@ -11,7 +11,9 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.ObjectModel;
-    
+    /// <summary>
+    /// Describes producer sql table, includes products associated with producer.
+    /// </summary>
     public partial class Producers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

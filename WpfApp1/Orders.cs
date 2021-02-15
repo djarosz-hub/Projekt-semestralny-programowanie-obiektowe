@@ -11,7 +11,9 @@ namespace WpfApp1
 {
     using System;
     using System.Collections.ObjectModel;
-    
+    /// <summary>
+    /// Describes orders sql table, includes info about client and employee, includes products associated to order.
+    /// </summary>
     public partial class Orders
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

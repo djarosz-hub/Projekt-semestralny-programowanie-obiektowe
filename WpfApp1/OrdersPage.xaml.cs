@@ -18,6 +18,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for OrdersPage.xaml
+    /// Page which handles viewing all orders and products assigned to it.
     /// </summary>
     public partial class OrdersPage : Page
     {
@@ -86,6 +87,8 @@ namespace WpfApp1
         private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
             if (OrdersDG.SelectedItem == null) return;
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
             int selectedOrderId = ((Order)OrdersDG.SelectedItem).orderId;
             Orders selectedOrder = db.Orders.Single(x => x.order_id == selectedOrderId);
             db.Orders.Remove(selectedOrder);
@@ -96,7 +99,7 @@ namespace WpfApp1
 
         private void CreateOrder_Click(object sender, RoutedEventArgs e)
         {
-            if(createOrderPage == null)
+            if (createOrderPage == null)
                 createOrderPage = new CreateOrderPage(db);
             this.NavigationService.Navigate(createOrderPage);
 

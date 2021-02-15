@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,13 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+[assembly: InternalsVisibleTo("UnitTestProject1")]
 namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for OSHome.xaml
+    /// Main page that contains initialization of other pages and their controls. Helping methods are included here.
     /// </summary>
     public partial class OSHome : Page
     {
+        /// <summary>
+        /// Determines function process depending on source which calls method.
+        /// </summary>
         public enum DbSources { Orders, Categories, Producers, Products, Employees, Clients };
         OrdersPage ordersPage;
         CategoriesPage categoriesPage;
@@ -272,6 +278,12 @@ namespace WpfApp1
                 case DbSources.Clients:
                     break;
             }
+        }
+        internal bool FinalAcceptancePrompt()
+        {
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                return true;
+            return false;
         }
         private void OrderButton_Click(object sender, RoutedEventArgs e)
         {

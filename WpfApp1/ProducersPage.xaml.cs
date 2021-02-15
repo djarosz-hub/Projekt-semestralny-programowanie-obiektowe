@@ -18,6 +18,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for ProducersPage.xaml
+    /// Page handles producers sql table.
     /// </summary>
     public partial class ProducersPage : Page
     {
@@ -98,6 +99,8 @@ namespace WpfApp1
                     MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
+                if (!commander.FinalAcceptancePrompt())
+                    return;
                 commander.RemoveFromDb(OSHome.DbSources.Producers, producerId);
             }
             else
@@ -107,6 +110,8 @@ namespace WpfApp1
                     MessageBox.Show($"Producer is already assigned to product, can't remove.");
                     return;
                 }
+                if (!commander.FinalAcceptancePrompt())
+                    return;
                 commander.RemoveFromDb(OSHome.DbSources.Producers, parsedIntValue);
             }
             MessageBox.Show("Producer successfully removed from database.");
@@ -132,7 +137,8 @@ namespace WpfApp1
                 MessageBox.Show($"Producer named {oldName} doesn't exists in database.");
                 return;
             }
-
+            if (!commander.FinalAcceptancePrompt())
+                return;
             Producers producerToUpdate = new Producers();
             producerToUpdate = db.Producers.Single(x => x.producer_name == oldName);
             producerToUpdate.producer_name = newName;

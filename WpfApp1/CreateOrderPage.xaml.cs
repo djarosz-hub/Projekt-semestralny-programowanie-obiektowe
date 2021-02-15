@@ -19,6 +19,7 @@ namespace WpfApp1
 {
     /// <summary>
     /// Interaction logic for CreateOrderPage.xaml
+    /// Page enables to create order according to the pattern, at least one product must be added, employee and client is necessary to finalize order creation process.
     /// </summary>
     public partial class CreateOrderPage : Page
     {
@@ -76,7 +77,7 @@ namespace WpfApp1
             var date = DateTime.Now;
             TimeSpan ts = new TimeSpan(0, 1, 0);
             date -= ts;
-            ///one minute is substracted - when DateTime is converted to sql ShortDateTime the value is rounded up, it may breake sql constraint <= GETDATE()
+            ///one minute is substracted - when DateTime is converted to sql ShortDateTime the value is rounded up, it may breake sql constraint <= GETDATE()///
             
             newOrder.order_date = date;
             foreach (var p in productsInOrder)
